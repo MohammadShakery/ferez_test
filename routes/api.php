@@ -71,6 +71,7 @@ use Illuminate\Support\Facades\Route;
     Route::prefix('/service/v1/client/')->name('service.')->middleware([\App\Http\Middleware\UserAuth::class,\App\Http\Middleware\BrandModule::class])->group(function (){
         Route::get('/category',[\App\Http\Controllers\Service\CategoryController::class,'index']);
         Route::get('/category/{category}/show',[\App\Http\Controllers\Service\CategoryController::class,'show']);
+        Route::get('/category/{category}/subcategories',[\App\Http\Controllers\Service\CategoryController::class,'getSubCategories']);
         Route::get('/brand',[\App\Http\Controllers\Service\BrandController::class,'index']);
         Route::get('/brand/{brand}/show',[\App\Http\Controllers\Service\BrandController::class,'show']);
         Route::get('/brand/category/{category}/show',[\App\Http\Controllers\Service\BrandController::class,'brandFromCategory']);

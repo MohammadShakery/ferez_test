@@ -20,6 +20,11 @@ class Category extends Model
         return $this->belongsTo(Category::class,'parent_id','id');
     }
 
+    public function children()
+    {
+        return $this->hasMany(Category::class,'parent_id','id')->with('brands');
+    }
+
     public function brands()
     {
         return $this->hasMany(Brand::class)->orderByDesc('priority');

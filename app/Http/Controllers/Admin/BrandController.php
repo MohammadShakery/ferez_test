@@ -36,6 +36,14 @@ class BrandController extends Controller
      */
     public function store(BrandStoreRequest $request)
     {
+        $category = Category::query()->where('id',$request->get('category_id'))->first();
+        if ($category->parent_id == 0)
+        {
+            return  response([
+                'status' => false ,
+                'message' => 'امکان انتخاب دسته بندی اصلی برای ایجاد برند وجود ندارد'
+            ],200);
+        }
         $name = uniqid();
         $guessExtension = $request->file('image')->guessExtension();
         $file = $request->file('image')->storeAs('public/images/brands', $name.'.'.$guessExtension  );
