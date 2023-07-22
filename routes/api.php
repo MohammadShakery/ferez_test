@@ -1,0 +1,80 @@
+<?php
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
+
+/*
+|--------------------------------------------------------------------------
+| API Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register API routes for your application. These
+| routes are loaded by the RouteServiceProvider and all of them will
+| be assigned to the "api" middleware group. Make something great!
+|
+*/
+
+    Route::prefix('/service/v1/admin')->name('service.')->group(function (){
+
+        # Admin Category Api
+        Route::get('/category',[\App\Http\Controllers\Admin\CategoryController::class,'index']);
+        Route::post('/category/store',[\App\Http\Controllers\Admin\CategoryController::class,'store']);
+        Route::get('/category/{category}/edit',[\App\Http\Controllers\Admin\CategoryController::class,'edit']);
+        Route::post('/category/{category}/update',[\App\Http\Controllers\Admin\CategoryController::class,'update']);
+        Route::delete('/category/{category}/delete',[\App\Http\Controllers\Admin\CategoryController::class,'destroy']);
+        Route::get('/category/{category}/subcategories',[\App\Http\Controllers\Admin\CategoryController::class,'getSubCategories']);
+
+
+        # Admin Brand Api
+        Route::resource('brand',\App\Http\Controllers\Admin\BrandController::class);
+        Route::get('/category/{category}/brand',[\App\Http\Controllers\Admin\BrandController::class,'getBrandFromCategory']);
+
+        # Admin Brand Category Api
+        Route::resource('brand_category',\App\Http\Controllers\Admin\BrandCategoryController::class);
+
+        # Admin Product Api
+        Route::resource('product',\App\Http\Controllers\Admin\ProductController::class);
+        Route::post('/product/{product}/update',[\App\Http\Controllers\Admin\ProductController::class,'update']);
+        Route::delete('/product/image/{image}',[\App\Http\Controllers\Admin\ProductController::class,'deleteImage']);
+
+        # Admin Alert Api
+        Route::resource('alert',\App\Http\Controllers\Admin\AlertController::class);
+        Route::post('/alert/{alert}/update',[\App\Http\Controllers\Admin\AlertController::class,'update']);
+
+        # Comment Api
+        Route::resource('comment',\App\Http\Controllers\Admin\CommentController::class);
+        Route::get('brand/{brand}/comment',[\App\Http\Controllers\Admin\CommentController::class,'getCommentFromBrand']);
+        Route::get('user/{user}/comment',[\App\Http\Controllers\Admin\CommentController::class,'getCommentFromUser']);
+
+        # Module Api
+        Route::resource('module',\App\Http\Controllers\Admin\ModuleController::class);
+        Route::post('/module/{module}/update',[\App\Http\Controllers\Admin\ModuleController::class,'update']);
+        Route::post('/user/module/attach',[\App\Http\Controllers\Admin\ModuleController::class,'attachModuleToUser']);
+
+        Route::post('/setting/default_module',[\App\Http\Controllers\Admin\SettingController::class,'DefaultModule']);
+
+    });
+
+    Route::prefix('/service/v1/client')->name('service.')->group(function (){
+
+        Route::post('/login',[\App\Http\Controllers\Service\AuthController::class,'store']);
+        Route::post('/verify',[\App\Http\Controllers\Service\AuthController::class,'VerifyOTP']);
+//        Route::get('/profile',[])
+
+    });
+
+    Route::prefix('/service/v1/client/')->name('service.')->middleware(\App\Http\Middleware\UserAuth::class)->group(function (){
+            Route::get('user/profile/',[\App\Http\Controllers\Service\UserController::class,'index']);
+            Route::post('user/profile',[\App\Http\Controllers\Service\UserController::class,'store']);
+    });
+
+    Route::prefix('/service/v1/client/')->name('service.')->middleware([\App\Http\Middleware\UserAuth::class,\App\Http\Middleware\BrandModule::class])->group(function (){
+        Route::get('/category',[\App\Http\Controllers\Service\CategoryController::class,'index']);
+        Route::get('/category/{category}/show',[\App\Http\Controllers\Service\CategoryController::class,'show']);
+        Route::get('/brand',[\App\Http\Controllers\Service\BrandController::class,'index']);
+        Route::get('/brand/{brand}/show',[\App\Http\Controllers\Service\BrandController::class,'show']);
+        Route::get('/brand/category/{category}/show',[\App\Http\Controllers\Service\BrandController::class,'brandFromCategory']);
+        Route::get('/brand/{brand}/brand_categories',[\App\Http\Controllers\Service\BrandCategoryController::class,'index']);
+
+    });
+
