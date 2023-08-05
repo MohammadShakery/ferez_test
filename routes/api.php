@@ -84,5 +84,8 @@ use Illuminate\Support\Facades\Route;
         Route::get('/brand/category/{category}/show',[\App\Http\Controllers\Service\BrandController::class,'brandFromCategory']);
         Route::get('/brand/{brand}/brand_categories',[\App\Http\Controllers\Service\BrandCategoryController::class,'index']);
 
+        Route::get('/slider/{location}',[\App\Http\Controllers\Service\SliderController::class,'show']);
+        Route::get('/category/{category}/slider',[\App\Http\Controllers\Service\CategorySliderController::class,'show']);
+
     });
 
