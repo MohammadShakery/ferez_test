@@ -3,15 +3,17 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\CategorySliderStoreRequest;
+use App\Http\Requests\Admin\CategorySliderUpdateRequest;
 use App\Http\Requests\Admin\SliderStoreRequest;
 use App\Http\Requests\Admin\SliderUpdateRequest;
-use App\Models\Brand;
 use App\Models\Category;
+use App\Models\categorySlider;
 use App\Models\Slider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
-class SliderController extends Controller
+class CategorySliderController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,7 +22,7 @@ class SliderController extends Controller
     {
         return response([
             'status' => true ,
-            'sliders' => Slider::query()->orderByDesc('priority')->get()
+            'sliders' => categorySlider::query()->orderByDesc('priority')->get()
         ],200);
     }
 
@@ -35,18 +37,18 @@ class SliderController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(SliderStoreRequest $request)
+    public function store(CategorySliderStoreRequest $request)
     {
         $name = uniqid();
         $guessExtension = $request->file('image')->guessExtension();
-        $file = $request->file('image')->storeAs('public/images/sliders', $name.'.'.$guessExtension  );
+        $file = $request->file('image')->storeAs('public/images/category_sliders', $name.'.'.$guessExtension  );
         $path = Storage::url($file);
-        $slider = Slider::query()->create($request->all());
-        $slider->image = $path;
-        $slider->save();
+        $categorySlider = categorySlider::query()->create($request->all());
+        $categorySlider->image = $path;
+        $categorySlider->save();
         return response([
             'status' => true ,
-            'slider' => $slider ,
+            'slider' => $categorySlider ,
             'message' => 'اسلاید مورد نظر شما با موفقیت ایجاد گردید'
         ],200);
     }
@@ -62,52 +64,52 @@ class SliderController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Slider $slider)
+    public function edit(categorySlider $categorySlider)
     {
         return response([
             'status' => true ,
-            'slider' => $slider
+            'slider' => $categorySlider
         ],200);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(SliderUpdateRequest $request, Slider $slider)
+    public function update(CategorySliderUpdateRequest $request, categorySlider $categorySlider)
     {
-        $slider->update($request->all());
+        $categorySlider->update($request->all());
         if ($request->hasFile('image')) {
             $file = $request->file('image');
             $name = uniqid();
             $extension = $file->getClientOriginalExtension();
-            $path = $file->storeAs('public/image/sliders', $name . '.' . $extension);
+            $path = $file->storeAs('public/image/category_sliders', $name . '.' . $extension);
             $fileUrl = Storage::url($path);
 
             # Delete previous image if it exists
-            if ($slider->image) {
-                Storage::delete(parse_url($slider->image, PHP_URL_PATH));
+            if ($categorySlider->image) {
+                Storage::delete(parse_url($categorySlider->image, PHP_URL_PATH));
             }
 
-            $slider->image = $fileUrl;
-            $slider->save();
+            $categorySlider->image = $fileUrl;
+            $categorySlider->save();
         }
 
         return response([
             'status' => true ,
-            'slider' => $slider
+            'slider' => $categorySlider
         ],200);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Slider $slider)
+    public function destroy(categorySlider $categorySlider)
     {
         try {
-            $slider_clone = $slider;
-            $slider->delete();
-            if ($slider_clone->image) {
-                Storage::delete(parse_url($slider_clone->image, PHP_URL_PATH));
+            $categorySlider_clone = $categorySlider;
+            $categorySlider->delete();
+            if ($categorySlider_clone->image) {
+                Storage::delete(parse_url($categorySlider_clone->image, PHP_URL_PATH));
             }
             return response([
                 'status' => true ,
@@ -122,11 +124,11 @@ class SliderController extends Controller
         }
     }
 
-    public function getWithLocation(string $location)
+    public function getWithCategory_id(Category $category)
     {
         return response([
             'status' => true ,
-            'sliders' => Slider::query()->where('location',$location)->orderByDesc('priority')->get()
+            'sliders' => categorySlider::query()->where('category_id',$category->id)->orderByDesc('priority')->get()
         ],200);
     }
 }

@@ -53,13 +53,20 @@ use Illuminate\Support\Facades\Route;
 
         Route::post('/setting/default_module',[\App\Http\Controllers\Admin\SettingController::class,'DefaultModule']);
 
+        Route::resource('slider',\App\Http\Controllers\Admin\SliderController::class);
+        Route::post('/slider/{slider}/update',[\App\Http\Controllers\Admin\SliderController::class,'update']);
+        Route::get('/slider/location/{location}',[\App\Http\Controllers\Admin\SliderController::class,'getWithLocation']);
+
+        Route::resource('category_slider',\App\Http\Controllers\Admin\CategorySliderController::class);
+        Route::post('/category_slider/{category_slider}/update',[\App\Http\Controllers\Admin\CategorySliderController::class,'update']);
+        Route::get('/category_slider/category/{category}',[\App\Http\Controllers\Admin\CategorySliderController::class,'getWithCategory_id']);
+
     });
 
     Route::prefix('/service/v1/client')->name('service.')->group(function (){
 
         Route::post('/login',[\App\Http\Controllers\Service\AuthController::class,'store']);
         Route::post('/verify',[\App\Http\Controllers\Service\AuthController::class,'VerifyOTP']);
-//        Route::get('/profile',[])
 
     });
 
