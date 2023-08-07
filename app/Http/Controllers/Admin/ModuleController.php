@@ -127,7 +127,7 @@ class ModuleController extends Controller
     public function attachModuleToUser(ModuleUserStoreRequest $request)
     {
         $user = User::query()->where('id',$request->get('user'))->firstOrFail();
-        $user->modules()->attach($request->get('modules'));
+        $user->modules()->sync($request->get('modules'));
         return response([
             'status' => true ,
             'message' => 'دسترسی به ماژول های مورد برای این کاربر ایجاد شد'
