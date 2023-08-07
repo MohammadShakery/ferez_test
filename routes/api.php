@@ -87,5 +87,6 @@ use Illuminate\Support\Facades\Route;
         Route::get('/slider',[\App\Http\Controllers\Service\SliderController::class,'show']);
         Route::get('/category/{category}/slider',[\App\Http\Controllers\Service\CategorySliderController::class,'show']);
 
+        Route::get('/module',[\App\Http\Controllers\Service\ModuleController::class,'index']);
     });
 
