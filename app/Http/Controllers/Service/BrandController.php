@@ -21,7 +21,9 @@ class BrandController extends Controller
     {
         return response([
             'status' => true ,
-            'brand' => Brand::query()->where('id',$brand->id)->with('category')->first()
+            'brand' => Brand::query()->where('id',$brand->id)->with(['brandCategory' => function($query){
+                $query->with('products');
+            },'comments'])->first()
         ],200);
     }
 
