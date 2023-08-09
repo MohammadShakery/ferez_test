@@ -89,5 +89,7 @@ use Illuminate\Support\Facades\Route;
 
         Route::get('/module',[\App\Http\Controllers\Service\ModuleController::class,'index']);
         Route::get('/modules',[\App\Http\Controllers\Service\ModuleController::class,'allModules']);
+
+        Route::post('/comment/store',[\App\Http\Controllers\Service\CommentController::class,'store']);
     });
 
