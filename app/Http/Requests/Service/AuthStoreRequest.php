@@ -22,7 +22,7 @@ class AuthStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'phone' => ['required','regex:/^(0098|\+98|0)?(9\d{9})$/']
+            'phone' => ['required','regex:/^(0098|\+98)?(9\d{9})$/']
         ];
     }
 }
