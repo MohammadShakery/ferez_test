@@ -14,8 +14,7 @@ return new class extends Migration
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('start_color')->nullable();
-            $table->string('end_color')->nullable();
+            $table->integer('sort')->default(0);
             $table->unsignedBigInteger('parent_id')->default(0);
             $table->string('icon',220)->nullable();
             $table->boolean('status')->default(true);

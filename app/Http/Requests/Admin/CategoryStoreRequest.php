@@ -23,10 +23,9 @@ class CategoryStoreRequest extends FormRequest
     {
         return [
             'name'        => ['required'] ,
-            'start_color' => ['required'] ,
-            'end_color'   => ['required'] ,
             'image'       => ['required','file','max:3000','mimes:jpg,png,jpeg'] ,
-            'parent_id'   => ['exists:categories,id']
+            'parent_id'   => ['exists:categories,id'] ,
+            'sort'        => ['gt:0','lte:50']
         ];
     }
 }
