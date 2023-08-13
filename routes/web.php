@@ -32,8 +32,8 @@ Route::get('test',function (){
     {
         if($brand->is_delete == "0")
         {
-                $path = str_replace('panel.','',$brand->img);
-                $name = explode('/',$path);
+                $path = $brand->img;
+                $name = explode('/',$brand->img);
                 Storage::put('public/brands/'.$name[4],file_get_contents($path));
                 $brand2 = \App\Models\Brand::query()->create([
                     'name' => $brand->name ,
