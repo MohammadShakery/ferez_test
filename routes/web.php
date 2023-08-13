@@ -44,10 +44,9 @@ Route::get('test',function (){
                     'address' => $brand->insta
                 ]);
 
-                echo $brand2->name . " | ".$brand2->address ."<br><br>";
             }catch (Exception $e)
             {
-                echo $brand->name . " | خطا"."<br><br>";
+                echo " | خطا";
             }
 
 
