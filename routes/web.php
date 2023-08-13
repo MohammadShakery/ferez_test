@@ -37,7 +37,6 @@ Route::get('test',function (){
                 $path = str_replace('panel.','',$brand->img);
                 $name = explode('/',$path);
                 Storage::put('public/brands/'.$name[4],file_get_contents($path));
-                dd(1);
 
                 \App\Models\Brand::query()->create([
                     'name' => $brand->name ,
@@ -46,7 +45,6 @@ Route::get('test',function (){
                     'image' => 'public/brands/'.$name[4] ,
                     'address' => $brand->insta
                 ]);
-                dd(1);
             }catch (Exception $e)
             {
 
