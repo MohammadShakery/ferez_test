@@ -40,7 +40,7 @@ Route::get('test',function (){
                     'name' => $brand->name ,
                     'description' => $brand->body,
                     'tell' => $brand->phone ,
-                    'image' => 'public/brands/'.$name[4] ,
+                    'image' => 'storage/brands/'.$name[4] ,
                     'address' => $brand->insta
                 ]);
 
