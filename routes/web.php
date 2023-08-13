@@ -32,26 +32,23 @@ Route::get('test',function (){
     {
         if($brand->is_delete == "0")
         {
-            $path = str_replace('panel.','',$brand->img);
-            $name = explode('/',$path);
-            $brand2 = \App\Models\Brand::query()->create([
-                'name' => $brand->name ,
-                'description' => $brand->body,
-                'tell' => $brand->phone ,
-                'image' => 'public/brands/'.$name[4] ,
-                'address' => $brand->insta
-            ]);
-//            try {
-//
+            try {
+                $path = str_replace('panel.','',$brand->img);
+                $name = explode('/',$path);
+                Storage::put('public/brands/'.$name[4],file_get_contents($path));
+                $brand2 = \App\Models\Brand::query()->create([
+                    'name' => $brand->name ,
+                    'description' => $brand->body,
+                    'tell' => $brand->phone ,
+                    'image' => 'public/brands/'.$name[4] ,
+                    'address' => $brand->insta
+                ]);
 
-//                Storage::put('public/brands/'.$name[4],file_get_contents($path));
-
-
-//                echo $brand2->name . " | ".$brand2->address ."<br><br>";
-//            }catch (Exception $e)
-//            {
-//                echo $brand->name . " | خطا"."<br><br>";
-//            }
+                echo $brand2->name . " | ".$brand2->address ."<br><br>";
+            }catch (Exception $e)
+            {
+                echo $brand->name . " | خطا"."<br><br>";
+            }
 
 
         }
