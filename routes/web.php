@@ -38,16 +38,17 @@ Route::get('test',function (){
                 $name = explode('/',$path);
                 Storage::put('public/brands/'.$name[4],file_get_contents($path));
 
-                \App\Models\Brand::query()->create([
+                $brand2 = \App\Models\Brand::query()->create([
                     'name' => $brand->name ,
                     'description' => $brand->body,
                     'tell' => $brand->phone ,
                     'image' => 'public/brands/'.$name[4] ,
                     'address' => $brand->insta
                 ]);
+                echo $brand2->name . " | ".$brand2->address ."<br><br>";
             }catch (Exception $e)
             {
-
+                echo $brand->name . " | خطا"."<br><br>";
             }
 
 
