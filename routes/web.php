@@ -35,17 +35,15 @@ Route::get('test',function (){
             try {
 
                 $path = str_replace('panel.','',$brand->img);
-//                $client2 = new Client();
-//                $request2 = new Request('GET', $path, $headers);
-//                $res2 = $client2->send($request2);
-                Storage::put('public/brands/'.$path,file_get_contents($path));
+                $name = explode('/',$path);
+                Storage::put('public/brands/'.$name[4],file_get_contents($path));
                 dd(1);
 
                 \App\Models\Brand::query()->create([
                     'name' => $brand->name ,
                     'description' => $brand->body,
                     'tell' => $brand->phone ,
-                    'image' => 'public/brands/'.$path ,
+                    'image' => 'public/brands/'.$name[4] ,
                     'address' => $brand->insta
                 ]);
                 dd(1);
