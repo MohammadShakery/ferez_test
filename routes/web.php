@@ -32,7 +32,6 @@ Route::get('test',function (){
     {
         if($brand->is_delete == "0")
         {
-            try {
                 $path = str_replace('panel.','',$brand->img);
                 $name = explode('/',$path);
                 Storage::put('public/brands/'.$name[4],file_get_contents($path));
@@ -44,10 +43,7 @@ Route::get('test',function (){
                     'address' => $brand->insta
                 ]);
 
-            }catch (Exception $e)
-            {
-                echo " | خطا";
-            }
+
 
 
         }
