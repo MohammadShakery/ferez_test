@@ -13,13 +13,14 @@ return new class extends Migration
     {
         Schema::create('brands', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('category_id')->constrained();
+            $table->foreignId('category_id')->nullable()->constrained();
             $table->string('name');
             $table->unsignedBigInteger('view')->default(0);
-            $table->string('tell');
+            $table->string('tell')->nullable();
             $table->text('description')->nullable();
             $table->string('image',255);
             $table->integer('priority')->default(0);
+            $table->string('address',500)->nullable();
             $table->timestamps();
         });
     }
