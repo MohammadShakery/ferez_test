@@ -83,7 +83,6 @@ class BrandController extends Controller
     public function update(UpdateStoreRequest $request, Brand $brand)
     {
         $brand->update($request->all());
-        dd($request->all());
         if ($request->hasFile('image')) {
             $file = $request->file('image');
             $name = uniqid();
