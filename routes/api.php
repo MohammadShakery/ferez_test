@@ -28,6 +28,7 @@ use Illuminate\Support\Facades\Route;
         # Admin Brand Api
         Route::resource('brand',\App\Http\Controllers\Admin\BrandController::class);
         Route::get('/category/{category}/brand',[\App\Http\Controllers\Admin\BrandController::class,'getBrandFromCategory']);
+        Route::post('/brand/{brand}/update',[\App\Http\Controllers\Admin\BrandController::class,'update']);
 
         # Admin Brand Category Api
         Route::resource('brand_category',\App\Http\Controllers\Admin\BrandCategoryController::class);

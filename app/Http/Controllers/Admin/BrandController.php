@@ -97,8 +97,8 @@ class BrandController extends Controller
             }
 
             $brand->image = $fileUrl;
+            $brand->save();
         }
-        $brand->save();
 
         return response([
             'status' => true ,
