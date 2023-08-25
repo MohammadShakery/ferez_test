@@ -26,22 +26,24 @@ Route::get('test',function (){
     $request = new Request('GET', 'https://sanatabzar128.ir/api/test', $headers);
     $res = $client->send($request);
     $data =  json_decode($res->getBody());
-    $categories = $data->categories;
-    foreach ($categories as $category)
+    $products = $data->products;
+    foreach ($products as $product)
     {
-        if($category->brand->is_delete == "0" and $category->is_delete == "0") {
-                $path = $category->img;
-                $name = explode('/', $category->img);
-                Storage::put('public/categories/' . $name[4], file_get_contents($path));
-                $brand = \App\Models\Brand::query()->where('name',$category->brand->name)->first();
-                if(!\App\Models\brandCategory::query()->where('name',$category->name)->where('brand_id',$brand->id)->exists() and
-                \App\Models\brandCategory::query()->where('id','!=',$category->id))
+        if($product->is_delete == "0" and $product->cateogry_id != null) {
+                $path = $product->img;
+                $name = explode('/', $product->img);
+                Storage::put('public/products/' . $name[4], file_get_contents($path));
+                if(\App\Models\brandCategory::query()->where('id',$product->cateogry_id)->exists())
                 {
-                    $category = \App\Models\brandCategory::query()->create([
-                        'id' => $category->id ,
-                        'name' => $category->name,
-                        'image' => 'storage/categories/' . $name[4],
-                        'brand_id' => $brand->id
+                    $product_db = \App\Models\Product::query()->create([
+                        'name' => $product->title ,
+                        'description' => $product->content ,
+                        'brand_category_id' => $product->cateogry_id ,
+                        'price' => $product->price
+                    ]);
+                    \App\Models\Image::query()->create([
+                        'product_id' => $product_db->id ,
+                        'src' => 'storage/products/' . $name[4],
                     ]);
                 }
 
