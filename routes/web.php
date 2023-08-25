@@ -34,12 +34,16 @@ Route::get('test',function (){
                 $name = explode('/', $category->img);
                 Storage::put('public/categories/' . $name[4], file_get_contents($path));
                 $brand = \App\Models\Brand::query()->where('name',$category->brand->name)->first();
-                $category = \App\Models\brandCategory::query()->create([
-                    'id' => $category->id ,
-                    'name' => $category->name,
-                    'image' => 'storage/categories/' . $name[4],
-                    'brand_id' => $brand->id
-                ]);
+                if(!\App\Models\brandCategory::query()->where('name',$category->name)->where('brand_id',$brand->id)->exists())
+                {
+                    $category = \App\Models\brandCategory::query()->create([
+                        'id' => $category->id ,
+                        'name' => $category->name,
+                        'image' => 'storage/categories/' . $name[4],
+                        'brand_id' => $brand->id
+                    ]);
+                }
+
 
 
         }
