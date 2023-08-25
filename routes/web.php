@@ -34,7 +34,8 @@ Route::get('test',function (){
                 $name = explode('/', $category->img);
                 Storage::put('public/categories/' . $name[4], file_get_contents($path));
                 $brand = \App\Models\Brand::query()->where('name',$category->brand->name)->first();
-                if(!\App\Models\brandCategory::query()->where('name',$category->name)->where('brand_id',$brand->id)->exists())
+                if(!\App\Models\brandCategory::query()->where('name',$category->name)->where('brand_id',$brand->id)->exists() and
+                \App\Models\brandCategory::query()->where('id','!=',$category->id))
                 {
                     $category = \App\Models\brandCategory::query()->create([
                         'id' => $category->id ,
