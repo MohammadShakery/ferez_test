@@ -19,34 +19,30 @@ use Illuminate\Support\Facades\Storage;
 
 Route::get('/service/amp',[\App\Http\Controllers\TestController::class,'test']);
 
-//Route::get('test',function (){
-//    $string = "https://panel.sanatabzar128.ir/uploads/1660983551.png";
-//    $client = new Client();
-//    $headers = [
-//    ];
-//    $request = new Request('GET', 'https://sanatabzar128.ir/mbm', $headers);
-//    $res = $client->send($request);
-//    $data =  json_decode($res->getBody());
-//    $brands = $data->brands;
-//    foreach ($brands as $brand)
-//    {
-//        if($brand->is_delete == "0")
-//        {
-//                $path = $brand->img;
-//                $name = explode('/',$brand->img);
-//                Storage::put('public/brands/'.$name[4],file_get_contents($path));
-//                $brand2 = \App\Models\Brand::query()->create([
-//                    'name' => $brand->name ,
-//                    'description' => $brand->body,
-//                    'tell' => $brand->phone ,
-//                    'image' => 'storage/brands/'.$name[4] ,
-//                    'address' => $brand->insta
-//                ]);
-//
-//
-//
-//
-//        }
-//    }
-//
-//});
+Route::get('test',function (){
+    $client = new Client();
+    $headers = [
+    ];
+    $request = new Request('GET', 'https://sanatabzar128.ir/api/test', $headers);
+    $res = $client->send($request);
+    $data =  json_decode($res->getBody());
+    $categories = $data->categories;
+    foreach ($categories as $category)
+    {
+        if($category->brand->is_delete == "0" and $category->is_delete == "0") {
+                $path = $category->img;
+                $name = explode('/', $category->img);
+                Storage::put('public/categories/' . $name[4], file_get_contents($path));
+                $brand = \App\Models\Brand::query()->where('name',$category->brand->name)->first();
+                $category = \App\Models\brandCategory::query()->create([
+                    'id' => $category->id ,
+                    'name' => $category->name,
+                    'image' => 'storage/categories/' . $name[4],
+                    'brand_id' => $brand->id
+                ]);
+
+
+        }
+    }
+
+});
