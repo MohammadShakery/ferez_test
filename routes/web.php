@@ -29,16 +29,16 @@ Route::get('test',function (){
     $products = $data->products;
     foreach ($products as $product)
     {
-        if($product->is_delete == "0" and $product->cateogry_id != null) {
+        if($product->is_delete == "0" and $product->id_category != null) {
                 $path = $product->img;
                 $name = explode('/', $product->img);
                 Storage::put('public/products/' . $name[4], file_get_contents($path));
-                if(\App\Models\brandCategory::query()->where('id',$product->cateogry_id)->exists())
+                if(\App\Models\brandCategory::query()->where('id',$product->id_category)->exists())
                 {
                     $product_db = \App\Models\Product::query()->create([
                         'name' => $product->title ,
                         'description' => $product->content ,
-                        'brand_category_id' => $product->cateogry_id ,
+                        'brand_category_id' => $product->id_category ,
                         'price' => $product->price
                     ]);
                     \App\Models\Image::query()->create([
