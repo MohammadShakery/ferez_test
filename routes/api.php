@@ -47,11 +47,6 @@ use Illuminate\Support\Facades\Route;
         Route::get('brand/{brand}/comment',[\App\Http\Controllers\Admin\CommentController::class,'getCommentFromBrand']);
         Route::get('user/{user}/comment',[\App\Http\Controllers\Admin\CommentController::class,'getCommentFromUser']);
 
-        # Module Api
-        Route::resource('module',\App\Http\Controllers\Admin\ModuleController::class);
-        Route::post('/module/{module}/update',[\App\Http\Controllers\Admin\ModuleController::class,'update']);
-        Route::post('/user/module/attach',[\App\Http\Controllers\Admin\ModuleController::class,'attachModuleToUser']);
-
         Route::post('/setting/default_module',[\App\Http\Controllers\Admin\SettingController::class,'DefaultModule']);
 
         Route::resource('slider',\App\Http\Controllers\Admin\SliderController::class);
@@ -61,6 +56,9 @@ use Illuminate\Support\Facades\Route;
         Route::resource('category_slider',\App\Http\Controllers\Admin\CategorySliderController::class);
         Route::post('/category_slider/{category_slider}/update',[\App\Http\Controllers\Admin\CategorySliderController::class,'update']);
         Route::get('/category_slider/category/{category}',[\App\Http\Controllers\Admin\CategorySliderController::class,'getWithCategory_id']);
+
+        Route::get('/request/industrials',[\App\Http\Controllers\Admin\IndustrialController::class,'index']);
+        Route::post('/request/{request}/industrial/update',[\App\Http\Controllers\Admin\IndustrialController::class,'store']);
 
     });
 
@@ -76,7 +74,7 @@ use Illuminate\Support\Facades\Route;
             Route::post('user/profile',[\App\Http\Controllers\Service\UserController::class,'store']);
     });
 
-    Route::prefix('/service/v1/client/')->name('service.')->middleware([\App\Http\Middleware\UserAuth::class,\App\Http\Middleware\BrandModule::class])->group(function (){
+    Route::prefix('/service/v1/client/')->name('service.')->middleware([\App\Http\Middleware\UserAuth::class])->group(function (){
         Route::get('/category',[\App\Http\Controllers\Service\CategoryController::class,'index']);
         Route::get('/category/{category}/show',[\App\Http\Controllers\Service\CategoryController::class,'show']);
         Route::get('/category/{category}/subcategories',[\App\Http\Controllers\Service\CategoryController::class,'getSubCategories']);
@@ -88,9 +86,8 @@ use Illuminate\Support\Facades\Route;
         Route::get('/slider',[\App\Http\Controllers\Service\SliderController::class,'show']);
         Route::get('/category/{category}/slider',[\App\Http\Controllers\Service\CategorySliderController::class,'show']);
 
-        Route::get('/module',[\App\Http\Controllers\Service\ModuleController::class,'index']);
-        Route::get('/modules',[\App\Http\Controllers\Service\ModuleController::class,'allModules']);
-
         Route::post('/comment/store',[\App\Http\Controllers\Service\CommentController::class,'store']);
+
+        Route::post('/industrial/store',[\App\Http\Controllers\Service\IndustrialController::class,'CheckIndustrial']);
     });
 

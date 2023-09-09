@@ -11,10 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('module_user', function (Blueprint $table) {
-            $table->foreignId('user_id')->constrained();
-            $table->foreignId('module_id')->constrained();
-            $table->primary(['user_id','module_id']);
+        Schema::table('users', function (Blueprint $table) {
+            $table->boolean('is_industrial')->default(false);
         });
     }
 
@@ -23,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('module_user');
+        Schema::table('users', function (Blueprint $table) {
+            //
+        });
     }
 };

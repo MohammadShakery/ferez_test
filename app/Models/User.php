@@ -24,7 +24,8 @@ class User extends Authenticatable
         'phone' ,
         'token' ,
         'otp_code' ,
-        'otp_expiration'
+        'otp_expiration' ,
+        'is_industrial'
     ];
 
     /**
@@ -49,15 +50,5 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-
-    public function modules()
-    {
-        return $this->belongsToMany(Module::class);
-    }
-
-    public function hasAccess($id)
-    {
-        return $this->belongsToMany(Module::class)->where('id',$id)->exists();
-    }
 
 }

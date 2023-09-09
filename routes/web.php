@@ -20,36 +20,36 @@ use Illuminate\Support\Facades\Storage;
 Route::get('/service/amp',[\App\Http\Controllers\TestController::class,'test']);
 
 Route::get('test',function (){
-    $client = new Client();
-    $headers = [
-    ];
-    $request = new Request('GET', 'https://sanatabzar128.ir/api/test', $headers);
-    $res = $client->send($request);
-    $data =  json_decode($res->getBody());
-    $products = $data->products;
-    foreach ($products as $product)
-    {
-        if($product->is_delete == "0" and $product->id_category != null) {
-                $path = $product->img;
-                $name = explode('/', $product->img);
-                Storage::put('public/products/' . $name[4], file_get_contents($path));
-                if(\App\Models\brandCategory::query()->where('id',$product->id_category)->exists())
-                {
-                    $product_db = \App\Models\Product::query()->create([
-                        'name' => $product->title ,
-                        'description' => $product->content ,
-                        'brand_category_id' => $product->id_category ,
-                        'price' => $product->price
-                    ]);
-                    \App\Models\Image::query()->create([
-                        'product_id' => $product_db->id ,
-                        'src' => 'storage/products/' . $name[4],
-                    ]);
-                }
-
-
-
-        }
-    }
+//    $client = new Client();
+//    $headers = [
+//    ];
+//    $request = new Request('GET', 'https://sanatabzar128.ir/api/test', $headers);
+//    $res = $client->send($request);
+//    $data =  json_decode($res->getBody());
+//    $products = $data->products;
+//    foreach ($products as $product)
+//    {
+//        if($product->is_delete == "0" and $product->id_category != null) {
+//                $path = $product->img;
+//                $name = explode('/', $product->img);
+//                Storage::put('public/products/' . $name[4], file_get_contents($path));
+//                if(\App\Models\brandCategory::query()->where('id',$product->id_category)->exists())
+//                {
+//                    $product_db = \App\Models\Product::query()->create([
+//                        'name' => $product->title ,
+//                        'description' => $product->content ,
+//                        'brand_category_id' => $product->id_category ,
+//                        'price' => $product->price
+//                    ]);
+//                    \App\Models\Image::query()->create([
+//                        'product_id' => $product_db->id ,
+//                        'src' => 'storage/products/' . $name[4],
+//                    ]);
+//                }
+//
+//
+//
+//        }
+//    }
 
 });
