@@ -10,4 +10,9 @@ class Request extends Model
     use HasFactory;
 
     protected $fillable = ['type','data'];
+
+    public function setDataAttribute()
+    {
+        return json_decode($this->data);
+    }
 }
