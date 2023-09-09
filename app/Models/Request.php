@@ -14,7 +14,7 @@ class Request extends Model
     protected $appends = ['information'];
     protected $hidden = ['data'];
 
-    public function setInformationAttribute()
+    public function getInformationAttribute()
     {
         return json_decode($this->data);
     }
