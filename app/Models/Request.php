@@ -11,7 +11,7 @@ class Request extends Model
 
     protected $fillable = ['type','data'];
 
-    public function setDataAttribute()
+    public function getDataAttribute()
     {
         return json_decode($this->data);
     }
