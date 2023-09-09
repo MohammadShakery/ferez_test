@@ -14,7 +14,7 @@ class UserController extends Controller
     {
         return response([
             'status' => true ,
-            'user' => User::query()->where('phone',decrypt($request->header('token'))['BMSN'])->with('modules')->firstOrFail()
+            'user' => User::query()->where('phone',decrypt($request->header('token'))['BMSN'])->firstOrFail()
         ],200);
     }
 
