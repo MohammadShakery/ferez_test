@@ -9,7 +9,7 @@ class Request extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['type','data'];
+    protected $fillable = ['type','data','checked','user_id'];
 
     protected $appends = ['information'];
     protected $hidden = ['data'];
@@ -17,5 +17,10 @@ class Request extends Model
     public function getInformationAttribute()
     {
         return json_decode($this->data);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

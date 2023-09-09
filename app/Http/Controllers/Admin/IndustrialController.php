@@ -13,7 +13,7 @@ class IndustrialController extends Controller
     {
         return response([
             'status' => true ,
-            'industrial_requests' => \App\Models\Request::query()->where('checked',false)->orderBy('created_at')->get()
+            'industrial_requests' => \App\Models\Request::query()->where('checked',false)->orderBy('created_at')->with('user')->get()
         ],200);
     }
 
