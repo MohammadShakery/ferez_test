@@ -11,7 +11,10 @@ class Request extends Model
 
     protected $fillable = ['type','data'];
 
-    public function getDataAttribute()
+    protected $appends = ['information'];
+    protected $hidden = ['data'];
+
+    public function setInformationAttribute()
     {
         return json_decode($this->data);
     }
