@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Service\AuthStoreRequest;
 use App\Http\Requests\Service\RegisterRequest;
 use App\Http\Requests\Service\VerifyOTPRequest;
-use App\lib\Kavenegar\KavenegarApi;
 use App\Models\Setting;
 use App\Models\User;
 use App\Services\SMS\SmsService;
