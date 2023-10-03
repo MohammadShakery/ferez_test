@@ -48,4 +48,9 @@ class UserController extends Controller
             'user' => $user
         ],200);
     }
+
+    public function update(Request $request)
+    {
+
+    }
 }
