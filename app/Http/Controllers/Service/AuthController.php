@@ -101,12 +101,5 @@ class AuthController extends Controller
         ],200);
     }
 
-    public function addModules(User $user)
-    {
-        if(Setting::query()->where('lable','default_modules')->exists())
-        {
-            $setting = Setting::query()->where('lable','default_modules')->first();
-            $user->modules()->attach(json_decode($setting->data));
-        }
-    }
+
 }
