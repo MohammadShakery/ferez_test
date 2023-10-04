@@ -22,7 +22,7 @@ use Illuminate\Support\Facades\Storage;
 
 Route::get('/service/amp',[\App\Http\Controllers\TestController::class,'test']);
 
-Route::get('test',function (){
+Route::get('/test',function (){
 //    $client = new Client();
 //    $headers = [
 //    ];
@@ -72,7 +72,9 @@ Route::get('test',function (){
     $brands = \App\Models\Brand::all();
     foreach ($brands as $brand)
     {
+        echo "1";
         if(Storage::exists($brand->image)) {
+            echo "2";
             try {
                 $url = Storage::path($brand->image);
                 $name = explode("/",$brand->image);
