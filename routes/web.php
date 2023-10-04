@@ -73,7 +73,7 @@ Route::get('/test',function (){
     foreach ($brands as $brand)
     {
         echo "1";
-        $image = str_replace("storage/app",'public',$brand->image);
+        $image = str_replace("app/storage",'app/public',$brand->image);
         dd(Storage::exists($image));
         if(Storage::exists($brand->image)) {
             echo "2";
