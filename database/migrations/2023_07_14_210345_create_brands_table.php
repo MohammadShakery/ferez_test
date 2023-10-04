@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('tell')->nullable();
             $table->text('description')->nullable();
             $table->string('image',255);
+            $table->string('cdn_image',255)->nullable();
             $table->integer('priority')->default(0);
             $table->string('address',500)->nullable();
             $table->timestamps();

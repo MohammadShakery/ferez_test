@@ -82,7 +82,7 @@ class CategorySliderController extends Controller
             $file = $request->file('image');
             $name = uniqid();
             $extension = $file->getClientOriginalExtension();
-            $path = $file->storeAs('public/image/category_sliders', $name . '.' . $extension);
+            $path = $file->storeAs('public/images/category_sliders', $name . '.' . $extension);
             $fileUrl = Storage::url($path);
 
             # Delete previous image if it exists

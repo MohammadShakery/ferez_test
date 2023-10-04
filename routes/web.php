@@ -1,6 +1,9 @@
 <?php
 
 use App\Services\SMS\SmsService;
+use Aws\Exception\AwsException;
+use Aws\Exception\MultipartUploadException;
+use Aws\S3\Exception\S3Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Request;
 use Illuminate\Support\Facades\Route;
@@ -51,5 +54,43 @@ Route::get('test',function (){
 //
 //        }
 //    }
+
+    $access_key = "bde69fd1-9530-4b1d-b16d-482bffd2e615";
+    $secret_key = "1a743675e6d1fe4fe405dd4f566f0b5b2083aa8290d0060d9f15844de569933f";
+    $client = new \Aws\S3\S3Client([
+        'region' => 'region',
+        'version' => '2006-03-01',
+        'endpoint' => "https://s3.ir-thr-at1.arvanstorage.ir",
+        'credentials' => [
+            'key' => $access_key,
+            'secret' => $secret_key
+        ],
+        'use_path_style_endpoint' => true
+    ]);
+
+
+    $brands = \App\Models\Brand::all();
+    foreach ($brands as $brand)
+    {
+        if(Storage::exists($brand->image)) {
+            try {
+                $url = Storage::path($brand->image);
+                $name = explode("/",$brand->image);
+                $result = $client->putObject([
+                    'Bucket' => 'gh23d',
+                    'Key' => 'brands/'.$name[2],
+                    'SourceFile' => $url,
+                    'ACL' => 'public-read'
+                ]);
+                $brand->update([
+                    'cdn_image' => $result->get("ObjectURL")
+                ]);
+            } catch (S3Exception $e) {
+                echo $e->getMessage() . "\n";
+            }
+        }
+    }
+
+
 
 });

@@ -31,7 +31,7 @@ class UserController extends Controller
             $file = $request->file('image');
             $name = uniqid();
             $extension = $file->getClientOriginalExtension();
-            $path = $file->storeAs('public/image/users', $name . '.' . $extension);
+            $path = $file->storeAs('public/images/users', $name . '.' . $extension);
             $fileUrl = Storage::url($path);
 
             # Delete previous image if it exists

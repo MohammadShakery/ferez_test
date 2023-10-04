@@ -22,7 +22,7 @@ class IndustrialController extends Controller
         $file = $request->file('image');
         $name = uniqid();
         $extension = $file->getClientOriginalExtension();
-        $path = $file->storeAs('public/image/request/industrial', $name . '.' . $extension);
+        $path = $file->storeAs('public/images/request/industrial', $name . '.' . $extension);
         $fileUrl = Storage::url($path);
         $data = array(
             'name' => $request->get('brand') ,

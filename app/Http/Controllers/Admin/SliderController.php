@@ -80,7 +80,7 @@ class SliderController extends Controller
             $file = $request->file('image');
             $name = uniqid();
             $extension = $file->getClientOriginalExtension();
-            $path = $file->storeAs('public/image/sliders', $name . '.' . $extension);
+            $path = $file->storeAs('public/images/sliders', $name . '.' . $extension);
             $fileUrl = Storage::url($path);
 
             # Delete previous image if it exists

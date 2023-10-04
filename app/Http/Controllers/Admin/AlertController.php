@@ -79,7 +79,7 @@ class AlertController extends Controller
             $file = $request->file('image');
             $name = uniqid();
             $extension = $file->getClientOriginalExtension();
-            $path = $file->storeAs('public/image/alerts', $name . '.' . $extension);
+            $path = $file->storeAs('public/images/alerts', $name . '.' . $extension);
             $fileUrl = Storage::url($path);
 
             # Delete previous image if it exists
