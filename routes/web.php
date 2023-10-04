@@ -72,27 +72,22 @@ Route::get('/test',function (){
     $brands = \App\Models\Brand::all();
     foreach ($brands as $brand)
     {
-        echo "1";
-        $image = str_replace("app/storage",'app/public',$brand->image);
-        dd(Storage::exists($image));
-        if(Storage::exists($brand->image)) {
-            echo "2";
+            $image = str_replace("app/storage",'app/public',Storage::path($brand->image));
             try {
-                $url = Storage::path($brand->image);
                 $name = explode("/",$brand->image);
                 $result = $client->putObject([
                     'Bucket' => 'gh23d',
                     'Key' => 'brands/'.$name[2],
-                    'SourceFile' => $url,
+                    'SourceFile' => $image,
                     'ACL' => 'public-read'
                 ]);
                 $brand->update([
                     'cdn_image' => $result->get("ObjectURL")
                 ]);
+                echo "2";
             } catch (S3Exception $e) {
                 echo $e->getMessage() . "\n";
             }
-        }
     }
 
 
