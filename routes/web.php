@@ -77,19 +77,19 @@ Route::get('/test',function (){
     ]);
 
 
-    $images = \App\Models\Image::all();
-    foreach ($images as $image2)
+    $slides = \App\Models\Slider::all();
+    foreach ($slides as $slide)
     {
-            $image = str_replace("app/storage",'app/public',Storage::path($image2->src));
+            $image = str_replace("app/storage",'app/public',Storage::path($slide->image));
             try {
-                $name = explode("/",$image2->src);
+                $name = explode("/",$slide->image);
                 $result = $client->putObject([
                     'Bucket' => 'gh23d',
-                    'Key' => 'product/'.$name[sizeof($name)-1],
+                    'Key' => 'slider/'.$name[sizeof($name)-1],
                     'SourceFile' => $image,
                     'ACL' => 'public-read'
                 ]);
-                $image2->update([
+                $slide->update([
                     'cdn_image' => $result->get("ObjectURL")
                 ]);
                 echo "2";
