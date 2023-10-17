@@ -77,19 +77,19 @@ Route::get('/test',function (){
     ]);
 
 
-    $brands = \App\Models\brandCategory::all();
-    foreach ($brands as $brand)
+    $images = \App\Models\Image::all();
+    foreach ($images as $image2)
     {
-            $image = str_replace("app/storage",'app/public',Storage::path($brand->image));
+            $image = str_replace("app/storage",'app/public',Storage::path($image2->src));
             try {
-                $name = explode("/",$brand->image);
+                $name = explode("/",$image2->src);
                 $result = $client->putObject([
                     'Bucket' => 'gh23d',
-                    'Key' => 'brand_category/'.$name[sizeof($name)-1],
+                    'Key' => 'product/'.$name[sizeof($name)-1],
                     'SourceFile' => $image,
                     'ACL' => 'public-read'
                 ]);
-                $brand->update([
+                $image2->update([
                     'cdn_image' => $result->get("ObjectURL")
                 ]);
                 echo "2";

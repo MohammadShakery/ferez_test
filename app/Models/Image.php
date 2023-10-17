@@ -9,7 +9,7 @@ class Image extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['product_id','src'];
+    protected $fillable = ['product_id','src','cdn_image'];
 
     public function product()
     {
