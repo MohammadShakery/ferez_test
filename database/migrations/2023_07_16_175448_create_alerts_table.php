@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('link',255)->nullable();
             $table->enum('type',[0,1,2])->default(0);
             $table->string('image');
+            $table->string('cdn_image',255)->nullable();
             $table->timestamps();
         });
     }

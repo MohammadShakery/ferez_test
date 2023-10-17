@@ -22,6 +22,14 @@ use Illuminate\Support\Facades\Storage;
 
 Route::get('/service/amp',[\App\Http\Controllers\TestController::class,'test']);
 
+
+    Route::get('/t',function (){
+        $name = "fgf/dfs/gsdff/kgj.jpg";
+        $name2 = explode("/",$name);
+        dd($name2[sizeof($name2)-1]);
+
+    });
+
 Route::get('/test',function (){
 //    $client = new Client();
 //    $headers = [
@@ -69,7 +77,7 @@ Route::get('/test',function (){
     ]);
 
 
-    $brands = \App\Models\Brand::all();
+    $brands = \App\Models\brandCategory::all();
     foreach ($brands as $brand)
     {
             $image = str_replace("app/storage",'app/public',Storage::path($brand->image));
@@ -77,7 +85,7 @@ Route::get('/test',function (){
                 $name = explode("/",$brand->image);
                 $result = $client->putObject([
                     'Bucket' => 'gh23d',
-                    'Key' => 'brands/'.$name[2],
+                    'Key' => 'brand_category/'.$name[sizeof($name)-1],
                     'SourceFile' => $image,
                     'ACL' => 'public-read'
                 ]);

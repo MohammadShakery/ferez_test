@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('location',50);
             $table->integer('priority')->default(0);
             $table->string('image',255);
+            $table->string('cdn_image',255)->nullable();
             $table->string('link',255)->nullable();
             $table->timestamps();
         });

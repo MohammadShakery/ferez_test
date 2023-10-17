@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('product_id');
             $table->string('src');
+            $table->string('cdn_image',255)->nullable();
             $table->timestamps();
         });
     }
