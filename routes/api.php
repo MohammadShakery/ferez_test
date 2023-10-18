@@ -86,9 +86,9 @@ use Illuminate\Support\Facades\Route;
         Route::get('/slider',[\App\Http\Controllers\Service\SliderController::class,'show']);
         Route::get('/category/{category}/slider',[\App\Http\Controllers\Service\CategorySliderController::class,'show']);
 
-        Route::post('/comment/store',[\App\Http\Controllers\Service\CommentController::class,'store']);
+        Route::post('/comment/store',[\App\Http\Controllers\Service\CommentController::class,'store'])->middleware(\App\Http\Middleware\UserAuth::class);
 
-        Route::post('/industrial/store',[\App\Http\Controllers\Service\IndustrialController::class,'CheckIndustrial']);
+        Route::post('/industrial/store',[\App\Http\Controllers\Service\IndustrialController::class,'CheckIndustrial'])->middleware(\App\Http\Middleware\UserAuth::class);
     });
 
 
