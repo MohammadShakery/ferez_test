@@ -37,7 +37,6 @@ class BrandCategoryController extends Controller
     public function store(BrandCategoryStoreRequest $request)
     {
         $brand_category = brandCategory::query()->create($request->all());
-
         return response([
             'status' => true ,
             'brand_category' => $brand_category

@@ -50,6 +50,7 @@ class BrandController extends Controller
         $path = Storage::url($file);
         $brand = Brand::query()->create($request->all());
         $brand->image = $path;
+        $brand->cdn_image = (new \App\S3\ArvanS3)->sendFile($path);
         $brand->save();
         return response([
             'status' => true ,
@@ -94,8 +95,12 @@ class BrandController extends Controller
             if ($brand->image) {
                 Storage::delete(parse_url($brand->image, PHP_URL_PATH));
             }
-
+            if($brand->cdn_image != null)
+            {
+                (new \App\S3\ArvanS3)->deleteFile($brand->cdn_image);
+            }
             $brand->image = $fileUrl;
+            $brand->cdn_image = (new \App\S3\ArvanS3)->sendFile($fileUrl);
             $brand->save();
         }
 
@@ -115,6 +120,10 @@ class BrandController extends Controller
             $brand->delete();
             if ($brand_clone->image) {
                 Storage::delete(parse_url($brand_clone->image, PHP_URL_PATH));
+            }
+            if($brand_clone->cdn_image != null)
+            {
+                (new \App\S3\ArvanS3)->deleteFile($brand_clone->cdn_image);
             }
             return response([
                 'status' => true ,

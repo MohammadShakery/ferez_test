@@ -90,9 +90,12 @@ class AlertController extends Controller
             if ($alert->image) {
                 Storage::delete(parse_url($alert->image, PHP_URL_PATH));
             }
-            (new \App\S3\ArvanS3)->deleteFile($alert->cdn_image);
+            if($alert->cdn_image != null)
+            {
+                (new \App\S3\ArvanS3)->deleteFile($alert->cdn_image);
+            }
             $alert->image = $fileUrl;
-            $alert->cdn_image = (new \App\S3\ArvanS3)->sendFile($path);
+            $alert->cdn_image = (new \App\S3\ArvanS3)->sendFile($fileUrl);
             $alert->save();
         }
         return response([

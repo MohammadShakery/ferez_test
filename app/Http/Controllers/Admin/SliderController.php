@@ -43,6 +43,7 @@ class SliderController extends Controller
         $path = Storage::url($file);
         $slider = Slider::query()->create($request->all());
         $slider->image = $path;
+        $slider->cdn_image = (new \App\S3\ArvanS3)->sendFile($path);
         $slider->save();
         return response([
             'status' => true ,
@@ -87,8 +88,12 @@ class SliderController extends Controller
             if ($slider->image) {
                 Storage::delete(parse_url($slider->image, PHP_URL_PATH));
             }
-
+            if($slider->cdn_image != null)
+            {
+                (new \App\S3\ArvanS3)->deleteFile($slider->cdn_image);
+            }
             $slider->image = $fileUrl;
+            $slider->cdn_image = (new \App\S3\ArvanS3)->sendFile($fileUrl);
             $slider->save();
         }
 
@@ -108,6 +113,10 @@ class SliderController extends Controller
             $slider->delete();
             if ($slider_clone->image) {
                 Storage::delete(parse_url($slider_clone->image, PHP_URL_PATH));
+            }
+            if($slider_clone->cdn_image != null)
+            {
+                (new \App\S3\ArvanS3)->deleteFile($slider_clone->cdn_image);
             }
             return response([
                 'status' => true ,

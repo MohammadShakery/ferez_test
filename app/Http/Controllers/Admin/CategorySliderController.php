@@ -45,6 +45,7 @@ class CategorySliderController extends Controller
         $path = Storage::url($file);
         $categorySlider = categorySlider::query()->create($request->all());
         $categorySlider->image = $path;
+        $categorySlider->cdn_image = (new \App\S3\ArvanS3)->sendFile($path);
         $categorySlider->save();
         return response([
             'status' => true ,
@@ -89,8 +90,12 @@ class CategorySliderController extends Controller
             if ($categorySlider->image) {
                 Storage::delete(parse_url($categorySlider->image, PHP_URL_PATH));
             }
-
+            if($categorySlider->cdn_image != null)
+            {
+                (new \App\S3\ArvanS3)->deleteFile($categorySlider->cdn_image);
+            }
             $categorySlider->image = $fileUrl;
+            $categorySlider->cdn_image = (new \App\S3\ArvanS3)->sendFile($fileUrl);
             $categorySlider->save();
         }
 
@@ -110,6 +115,10 @@ class CategorySliderController extends Controller
             $categorySlider->delete();
             if ($categorySlider_clone->image) {
                 Storage::delete(parse_url($categorySlider_clone->image, PHP_URL_PATH));
+            }
+            if($categorySlider_clone->cdn_image != null)
+            {
+                (new \App\S3\ArvanS3)->deleteFile($categorySlider_clone->cdn_image);
             }
             return response([
                 'status' => true ,

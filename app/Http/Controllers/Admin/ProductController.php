@@ -47,7 +47,8 @@ class ProductController extends Controller
             $fileUrl = Storage::url($path);
             Image::query()->create([
                 'product_id' => $product->id ,
-                'src' => $fileUrl
+                'src' => $fileUrl ,
+                'cdn_image' => (new \App\S3\ArvanS3)->sendFile($fileUrl)
             ]);
         }
         if ($request->hasFile('multidimensional_view')) {
@@ -102,7 +103,8 @@ class ProductController extends Controller
                 $fileUrl = Storage::url($path);
                 Image::query()->create([
                     'product_id' => $product->id ,
-                    'src' => $fileUrl
+                    'src' => $fileUrl ,
+                    'cdn_image' => (new \App\S3\ArvanS3)->sendFile($fileUrl)
                 ]);
             }
         }
@@ -143,6 +145,10 @@ class ProductController extends Controller
             {
                 if ($image->src) {
                     Storage::delete(parse_url($image->src, PHP_URL_PATH));
+                }
+                if($image->cdn_image != null)
+                {
+                    (new \App\S3\ArvanS3)->deleteFile($image->cdn_image);
                 }
                 $image->delete();
             }

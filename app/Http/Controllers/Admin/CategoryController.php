@@ -40,6 +40,8 @@ class CategoryController extends Controller
         $path = Storage::url($file);
         $category = Category::query()->create($request->all());
         $category->icon = $path;
+        $category->cdn_icon = (new \App\S3\ArvanS3)->sendFile($path);
+
         $category->save();
         return response([
             'status' => true ,
@@ -84,8 +86,12 @@ class CategoryController extends Controller
             if ($category->icon) {
                 Storage::delete(parse_url($category->icon, PHP_URL_PATH));
             }
-
+            if($category->cdn_icon != null)
+            {
+                (new \App\S3\ArvanS3)->deleteFile($category->cdn_icon);
+            }
             $category->icon = $fileUrl;
+            $category->cdn_icon = (new \App\S3\ArvanS3)->sendFile($fileUrl);
         }
 
         $category->update($request->all());
@@ -102,9 +108,14 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
         try {
+            $category_clone = $category;
             $category->delete();
-            if ($category->image) {
-                Storage::delete(parse_url($category->image, PHP_URL_PATH));
+            if ($category_clone->image) {
+                Storage::delete(parse_url($category_clone->image, PHP_URL_PATH));
+            }
+            if($category_clone->cdn_icon != null)
+            {
+                (new \App\S3\ArvanS3)->deleteFile($category_clone->cdn_icon);
             }
             return response([
                 'status' => true ,
