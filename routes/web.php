@@ -21,8 +21,10 @@ use Illuminate\Support\Facades\Storage;
 */
 
     Route::get('/test',function (){
-        dd(\Illuminate\Support\Facades\Cache::put('test2',"asd"));
-       dd(\Illuminate\Support\Facades\Cache::get('test2'));
+       return response([
+           'status' => true ,
+           'categories' => \App\Models\Category::all()
+       ],200);
     });
 
 
