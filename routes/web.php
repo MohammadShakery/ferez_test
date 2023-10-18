@@ -31,11 +31,18 @@ Route::get('/service/amp',[\App\Http\Controllers\TestController::class,'test']);
     });
 
 Route::get('/test',function (){
-        $images = \App\Models\Image::all();
-        foreach ($images as $image)
+        $brands = \App\Models\Brand::all();
+        foreach ($brands as $brand)
         {
-            $image->update([
-                'src' => ("/".$image->src)
+            $brand->update([
+                'image' => ("/".$brand->image)
+            ]);
+        }
+        $brand_categories = \App\Models\brandCategory::all();
+        foreach ($brand_categories as $brand_category)
+        {
+            $brand_category->update([
+                "image" => ("/".$brand_category->image)
             ]);
         }
 });
