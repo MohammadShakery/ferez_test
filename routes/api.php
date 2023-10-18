@@ -92,18 +92,3 @@ use Illuminate\Support\Facades\Route;
     });
 
 
-    Route::get('/test',function (){
-        dd(\Illuminate\Support\Facades\Cache::get('test'));
-        if(\Illuminate\Support\Facades\Cache::has('test'))
-        {
-            return response([
-                'products' => \Illuminate\Support\Facades\Cache::get('test')
-            ],200);
-        }
-        $products = \App\Models\Product::all();
-        \Illuminate\Support\Facades\Cache::put('test',$products,60);
-        return response([
-            'products' => $products
-        ],200);
-    });
-
