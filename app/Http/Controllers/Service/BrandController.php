@@ -32,16 +32,15 @@ class BrandController extends Controller
     {
         if(Cache::has('brandFromCategory_'.$category->id))
         {
-            $data_array = json_decode(Cache::get('brandFromCategory_'.$category->id));
-            $data_array[] = ['cache' => true];
+            $data_array = (array)json_decode(Cache::get('brandFromCategory_'.$category->id));
+            $data_array["cache"] = true;
             return response($data_array,200);
         }
-        $data = [
+        $data =array(
             'status'         => true ,
             'brands'         => Category::query()->where('id',$category->id)->with('brands')->first() ,
             'new_brands'     => Category::query()->where('id',$category->id)->with('newBrands')->first(),
-            'popular_brands' => Category::query()->where('id',$category->id)->with('popularBrands')->first(),
-        ];
+            'popular_brands' => Category::query()->where('id',$category->id)->with('popularBrands')->first());
         Cache::put('brandFromCategory_'.$category->id,json_encode($data),now()->addSeconds(300));
         return response($data,200);
     }

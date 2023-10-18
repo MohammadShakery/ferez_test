@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\Storage;
 */
 
     Route::get('/test',function (){
-        \Illuminate\Support\Facades\Cache::put('test2',"asd");
+        dd(\Illuminate\Support\Facades\Cache::put('test2',"asd"));
        dd(\Illuminate\Support\Facades\Cache::get('test2'));
     });
 
