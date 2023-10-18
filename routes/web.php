@@ -20,29 +20,7 @@ use Illuminate\Support\Facades\Storage;
 |
 */
 
-Route::get('/service/amp',[\App\Http\Controllers\TestController::class,'test']);
 
 
-    Route::get('/t',function (){
-        $name = "fgf/dfs/gsdff/kgj.jpg";
-        $name2 = explode("/",$name);
-        dd($name2[sizeof($name2)-1]);
 
-    });
 
-Route::get('/test',function (){
-        $brands = \App\Models\Brand::all();
-        foreach ($brands as $brand)
-        {
-            $brand->update([
-                'image' => ("/".$brand->image)
-            ]);
-        }
-        $brand_categories = \App\Models\brandCategory::all();
-        foreach ($brand_categories as $brand_category)
-        {
-            $brand_category->update([
-                "image" => ("/".$brand_category->image)
-            ]);
-        }
-});
