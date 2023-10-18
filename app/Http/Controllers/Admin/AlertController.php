@@ -7,11 +7,14 @@ use App\Http\Requests\Admin\AlertStoreRequest;
 use App\Http\Requests\Admin\AlertUpdateRequest;
 use App\Models\Alert;
 use App\Models\Brand;
+use App\S3\ArvanS3;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class AlertController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      */
@@ -42,6 +45,7 @@ class AlertController extends Controller
         $path = Storage::url($file);
         $alert = Alert::query()->create($request->all());
         $alert->image = $path;
+        $alert->cdn_image = (new \App\S3\ArvanS3)->sendFile($path);
         $alert->save();
         return response([
             'status' => true ,
@@ -86,8 +90,9 @@ class AlertController extends Controller
             if ($alert->image) {
                 Storage::delete(parse_url($alert->image, PHP_URL_PATH));
             }
-
+            (new \App\S3\ArvanS3)->deleteFile($alert->cdn_image);
             $alert->image = $fileUrl;
+            $alert->cdn_image = (new \App\S3\ArvanS3)->sendFile($path);
             $alert->save();
         }
         return response([
@@ -102,11 +107,15 @@ class AlertController extends Controller
     public function destroy(Alert $alert)
     {
         try {
-            $alert_clone = $alert;
-            $alert->delete();
-            if ($alert_clone->image) {
-                Storage::delete(parse_url($alert_clone->image, PHP_URL_PATH));
-            }
+                $alert_clone = $alert;
+                $alert->delete();
+                if ($alert_clone->image) {
+                    Storage::delete(parse_url($alert_clone->image, PHP_URL_PATH));
+                }
+                if($alert_clone->cdn_image != null)
+                {
+                    (new \App\S3\ArvanS3)->deleteFile($alert_clone->cdn_image);
+                }
             return response([
                 'status' => true ,
                 'message' => 'اعلان مورد نظر شما با موفقیت حذف گردید'

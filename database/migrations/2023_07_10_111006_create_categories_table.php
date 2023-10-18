@@ -17,6 +17,7 @@ return new class extends Migration
             $table->integer('sort')->default(0);
             $table->unsignedBigInteger('parent_id')->default(0);
             $table->string('icon',220)->nullable();
+            $table->string('cdn_icon',220)->nullable();
             $table->boolean('status')->default(true);
             $table->timestamps();
         });
