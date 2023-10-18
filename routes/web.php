@@ -31,11 +31,11 @@ Route::get('/service/amp',[\App\Http\Controllers\TestController::class,'test']);
     });
 
 Route::get('/test',function (){
-        $categories = \App\Models\Category::all();
-        foreach ($categories as $category)
+        $images = \App\Models\Image::all();
+        foreach ($images as $image)
         {
-            $category->update([
-                'cdn_icon' => (new App\S3\ArvanS3)->sendFile($category->icon)
+            $image->update([
+                'src' => ("/".$image->src)
             ]);
         }
 });
