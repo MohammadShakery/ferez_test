@@ -20,7 +20,9 @@ use Illuminate\Support\Facades\Storage;
 |
 */
 
-
+    Route::get('/test',function (){
+        \Illuminate\Support\Facades\Cache::put("test",\App\Models\Product::all(),now()->addSeconds(60));
+    });
 
 
 

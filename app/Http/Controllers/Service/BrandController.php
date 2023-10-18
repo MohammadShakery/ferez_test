@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class BrandController extends Controller
 {
@@ -29,12 +30,20 @@ class BrandController extends Controller
 
     public function brandFromCategory(Category $category)
     {
-        return response([
+        if(Cache::has('brandFromCategory_'.$category->id))
+        {
+            $data_array = json_decode(Cache::get('brandFromCategory_'.$category->id));
+            $data_array[] = ['cache' => true];
+            return response($data_array,200);
+        }
+        $data = [
             'status'         => true ,
             'brands'         => Category::query()->where('id',$category->id)->with('brands')->first() ,
             'new_brands'     => Category::query()->where('id',$category->id)->with('newBrands')->first(),
             'popular_brands' => Category::query()->where('id',$category->id)->with('popularBrands')->first(),
-        ],200);
+        ];
+        Cache::put('brandFromCategory_'.$category->id,json_encode($data),now()->addSeconds(300));
+        return response($data,200);
     }
 
 
