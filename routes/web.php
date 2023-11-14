@@ -22,9 +22,6 @@ use Illuminate\Support\Facades\Storage;
 |
 */
 
-    Route::get('/test',function (){
-        dd(Cache::put('brands',"asd",now()->addSeconds(300)));
-    });
 
 
 
