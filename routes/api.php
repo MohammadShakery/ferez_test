@@ -47,7 +47,6 @@ use Illuminate\Support\Facades\Route;
         Route::get('brand/{brand}/comment',[\App\Http\Controllers\Admin\CommentController::class,'getCommentFromBrand']);
         Route::get('user/{user}/comment',[\App\Http\Controllers\Admin\CommentController::class,'getCommentFromUser']);
 
-        Route::post('/setting/default_module',[\App\Http\Controllers\Admin\SettingController::class,'DefaultModule']);
 
         Route::resource('slider',\App\Http\Controllers\Admin\SliderController::class);
         Route::post('/slider/{slider}/update',[\App\Http\Controllers\Admin\SliderController::class,'update']);
@@ -60,6 +59,19 @@ use Illuminate\Support\Facades\Route;
         Route::get('/request/industrials',[\App\Http\Controllers\Admin\IndustrialController::class,'index']);
         Route::post('/request/{request}/industrial/update',[\App\Http\Controllers\Admin\IndustrialController::class,'store']);
 
+        Route::get('special_sale',[\App\Http\Controllers\Admin\SpecialSaleController::class,'index']);
+        Route::get('special_sale/{special_sale}/show',[\App\Http\Controllers\Admin\SpecialSaleController::class,'show']);
+        Route::post('special_sale',[\App\Http\Controllers\Admin\SpecialSaleController::class,'store']);
+        Route::post('special_sale/{special_sale}/update',[\App\Http\Controllers\Admin\SpecialSaleController::class,'update']);
+        Route::get('special_sale_image/{special_sale_image}/delete',[\App\Http\Controllers\Admin\SpecialSaleController::class,'deleteImage']);
+        Route::get('special_sale/{special_sale}/delete',[\App\Http\Controllers\Admin\SpecialSaleController::class,'delete']);
+
+        Route::resource('requirement_category',\App\Http\Controllers\Admin\RequirementCategoryController::class);
+        Route::resource('requirement',\App\Http\Controllers\Admin\RequirementController::class);
+        Route::post('/requirement/{requirement}/update',[\App\Http\Controllers\Admin\RequirementController::class,'update']);
+
+        Route::resource('post',\App\Http\Controllers\Admin\PostController::class);
+        Route::post('/post/{post}/update',[\App\Http\Controllers\Admin\PostController::class,'update']);
     });
 
     Route::prefix('/service/v1/client')->name('service.')->group(function (){
@@ -72,9 +84,25 @@ use Illuminate\Support\Facades\Route;
     Route::prefix('/service/v1/client/')->name('service.')->middleware(\App\Http\Middleware\UserAuth::class)->group(function (){
             Route::get('user/profile/',[\App\Http\Controllers\Service\UserController::class,'index']);
             Route::post('user/profile',[\App\Http\Controllers\Service\UserController::class,'store']);
+
+            Route::get('/network',[\App\Http\Controllers\Service\NetworkController::class,'index']);
+            Route::post('/network',[\App\Http\Controllers\Service\NetworkController::class,'store']);
+            Route::get('/network/getBrands',[\App\Http\Controllers\Service\NetworkController::class,'getBrands']);
+            Route::post('/network/{network}/update',[\App\Http\Controllers\Service\NetworkController::class,'update']);
+            Route::get('/network/{network}/brand/{brand}/attach',[\App\Http\Controllers\Service\NetworkController::class,'attachBrand']);
+            Route::get('/network/{network}/brand/{brand}/detach',[\App\Http\Controllers\Service\NetworkController::class,'detachBrand']);
+            Route::post('/network/{network}/delete',[\App\Http\Controllers\Service\NetworkController::class,'delete']);
+
+            Route::get('/post',[\App\Http\Controllers\Service\PostController::class,'index']);
+            Route::get('/post/{post}',[\App\Http\Controllers\Service\PostController::class,'show']);
+            Route::get('/post/{post}/like',[\App\Http\Controllers\Service\PostController::class,'attachLike']);
+            Route::get('/post/{post}/unlike',[\App\Http\Controllers\Service\PostController::class,'detachLike']);
+
+            Route::get('/home',[\App\Http\Controllers\Service\HomeController::class,'home']);
+
     });
 
-    Route::prefix('/service/v1/client/')->name('service.')->group(function (){
+    Route::prefix('/service/v1/client/')->name('service.')->middleware(\App\Http\Middleware\CRM::class)->group(function (){
         Route::get('/category',[\App\Http\Controllers\Service\CategoryController::class,'index']);
         Route::get('/category/{category}/show',[\App\Http\Controllers\Service\CategoryController::class,'show']);
         Route::get('/category/{category}/subcategories',[\App\Http\Controllers\Service\CategoryController::class,'getSubCategories']);
@@ -89,6 +117,11 @@ use Illuminate\Support\Facades\Route;
         Route::post('/comment/store',[\App\Http\Controllers\Service\CommentController::class,'store'])->middleware(\App\Http\Middleware\UserAuth::class);
 
         Route::post('/industrial/store',[\App\Http\Controllers\Service\IndustrialController::class,'CheckIndustrial'])->middleware(\App\Http\Middleware\UserAuth::class);
+
+        Route::get('/requirement_categories',[\App\Http\Controllers\Service\RequirementController::class,'getCategories']);
+        Route::get('/requirement_category/{requirement_category}/requirement',[\App\Http\Controllers\Service\RequirementController::class,'getRequirementFromCategory']);
+        Route::get('/requirement',[\App\Http\Controllers\Service\RequirementController::class,'allRequirements']);
+        Route::get('/requirement/{requirement}',[\App\Http\Controllers\Service\RequirementController::class,'show']);
     });
 
 

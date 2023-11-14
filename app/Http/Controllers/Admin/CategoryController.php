@@ -74,6 +74,7 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
+        $category->update($request->all());
         // Handle image upload
         if ($request->hasFile('image')) {
             $file = $request->file('image');
@@ -92,9 +93,9 @@ class CategoryController extends Controller
             }
             $category->icon = $fileUrl;
             $category->cdn_icon = (new \App\S3\ArvanS3)->sendFile($fileUrl);
+            $category->save();
         }
 
-        $category->update($request->all());
 
         return response([
             'status' => true,
@@ -110,8 +111,8 @@ class CategoryController extends Controller
         try {
             $category_clone = $category;
             $category->delete();
-            if ($category_clone->image) {
-                Storage::delete(parse_url($category_clone->image, PHP_URL_PATH));
+            if ($category_clone->icon) {
+                Storage::delete(parse_url($category_clone->icon, PHP_URL_PATH));
             }
             if($category_clone->cdn_icon != null)
             {

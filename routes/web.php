@@ -22,7 +22,21 @@ use Illuminate\Support\Facades\Storage;
 |
 */
 
-
+    Route::get('/test',function (){
+        $client = new Client();
+        $request = new Request('GET', 'https://jsonplaceholder.typicode.com/posts');
+        $res = $client->sendAsync($request)->wait();
+        $data = json_decode($res->getBody());
+        foreach ($data as $post)
+        {
+            \App\Models\Post::query()->create([
+                'title' => $post->title ,
+                'description' => $post->body ,
+                'file' => '/storage/dfsfsf.png' ,
+                'type' => 'image'
+            ]);
+        }
+    });
 
 
 

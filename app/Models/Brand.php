@@ -25,4 +25,11 @@ class Brand extends Model
     {
         return $this->hasMany(Comment::class)->where('status',true)->orderByDesc('created_at');
     }
+
+    public function network()
+    {
+        return $this->belongsToMany(Network::class,'brand_network');
+    }
+
+
 }
