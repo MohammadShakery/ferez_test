@@ -18,6 +18,12 @@ class HomeController extends Controller
     public function home(Request $request)
     {
         $user = $this->getUser($request);
+        $price = array(
+            'usd' => 52000 ,
+            'euro' => 56000 ,
+            'gold' => 2387000 ,
+            'sekkeh_tamam' => 30000000 ,
+        );
         return response([
             'status' => true ,
             'slides' => Slider::query()->where('location','main')->orderByDesc('priority')->get() ,
@@ -27,7 +33,8 @@ class HomeController extends Controller
             'requirements' => Requirement::query()->orderByDesc('created_at')->with('category')->limit(10)->get()  ,
             'new_brands' => Brand::query()->orderByDesc('created_at')->limit(10)->get() ,
             'popular_brands' => Brand::query()->orderByDesc('view')->limit(10)->get() ,
-            'news' => Alert::query()->orderByDesc('created_at')->limit(5)->get()
+            'news' => Alert::query()->orderByDesc('created_at')->limit(5)->get() ,
+            'price' => $price
         ],200);
     }
 
