@@ -22,6 +22,5 @@ use Illuminate\Support\Facades\Storage;
 |
 */
 
-    Route::get('/test',[\App\Http\Controllers\Service\HomeController::class,'home']);
 
 
