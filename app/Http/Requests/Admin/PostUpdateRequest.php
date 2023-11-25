@@ -22,7 +22,7 @@ class PostUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => ['required','msx:240'] ,
+            'title' => ['required','max:240'] ,
             'file' => ['mimes:png,jpg,jpeg,mp4,mkv'] ,
         ];
     }
