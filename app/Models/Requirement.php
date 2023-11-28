@@ -13,6 +13,6 @@ class Requirement extends Model
 
     public function category()
     {
-        return $this->belongsTo(requirementCategory::class);
+        return $this->belongsTo(requirementCategory::class,"requirement_category_id",'id');
     }
 }
