@@ -72,6 +72,11 @@ use Illuminate\Support\Facades\Route;
 
         Route::resource('post',\App\Http\Controllers\Admin\PostController::class);
         Route::post('/post/{post}/update',[\App\Http\Controllers\Admin\PostController::class,'update']);
+
+        Route::get('/user',[\App\Http\Controllers\Admin\UserController::class,'index']);
+        Route::get('/user/{user}',[\App\Http\Controllers\Admin\UserController::class,'show']);
+        Route::post('/user/{user}',[\App\Http\Controllers\Admin\UserController::class,'update']);
+
     });
 
     Route::prefix('/service/v1/client')->name('service.')->group(function (){
@@ -122,6 +127,9 @@ use Illuminate\Support\Facades\Route;
         Route::get('/requirement_category/{requirement_category}/requirement',[\App\Http\Controllers\Service\RequirementController::class,'getRequirementFromCategory']);
         Route::get('/requirement',[\App\Http\Controllers\Service\RequirementController::class,'allRequirements']);
         Route::get('/requirement/{requirement}',[\App\Http\Controllers\Service\RequirementController::class,'show']);
+
+        Route::get('/special_sale',[\App\Http\Controllers\Service\SpecialSaleController::class,'getSpecialSaleByPage']);
+        Route::get('/special_sale/{special_sale}',[\App\Http\Controllers\Service\SpecialSaleController::class,'getSpecialSale']);
     });
 
 
