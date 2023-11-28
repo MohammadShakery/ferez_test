@@ -61,7 +61,7 @@ class RequirementController extends Controller
             $data_array["cache"] = true;
             return response($data_array,200);
         }
-        $requirements = Requirement::query()->orderByDesc('created_at')->get();
+        $requirements = Requirement::query()->orderByDesc('created_at')->paginate();
         $data =array(
             'status' => true ,
             'requirements' => $requirements
@@ -70,7 +70,7 @@ class RequirementController extends Controller
 
         return response([
             'status' => true ,
-            'requirements' => Requirement::query()->orderByDesc('created_at')->get()
+            'requirements' => $requirements
         ],200);
     }
 
