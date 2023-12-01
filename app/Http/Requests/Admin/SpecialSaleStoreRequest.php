@@ -27,7 +27,8 @@ class SpecialSaleStoreRequest extends FormRequest
             'images.*' => ['max:3000','file','mimes:png,jpg,gif,jpeg'] ,
             'price' => ['integer','required'] ,
             'percent' => ['required','gte:1','lte:99'] ,
-            'contact' => ['required']
+            'contact' => ['required'] ,
+            'category_id' => ['required','exists:categories,id']
         ];
     }
 
@@ -45,7 +46,9 @@ class SpecialSaleStoreRequest extends FormRequest
             'percent.required' => 'درصد تخفیف این محصول را وارد نمایید' ,
             'percent.gte' => 'درصد تخفیف محصول باید بیشتر از 0 باشد',
             'percent.lte' => 'درصد تخفیف محصول باید کمتر از 100 باشد' ,
-            'contact.required' => 'اطلاعات تماس خود را وارد نمایید'
+            'contact.required' => 'اطلاعات تماس خود را وارد نمایید' ,
+            'category_id.exists' => 'دسته بندی ارسال شده معتبر نمی باشد',
+            'category_id.required' => 'دسته بندی را وارد نمایید'
         ];
     }
 }

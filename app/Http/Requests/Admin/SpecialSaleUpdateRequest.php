@@ -16,6 +16,7 @@ class SpecialSaleUpdateRequest extends FormRequest
             'images.*' => ['max:3000','file','mimes:png,jpg,gif,jpeg'] ,
             'price' => ['integer'] ,
             'percent' => ['gte:1','lte:99'] ,
+            'category_id' => ['exists:categories,id']
         ];
     }
 
@@ -28,6 +29,9 @@ class SpecialSaleUpdateRequest extends FormRequest
             'price.integer' => 'قیمت محصول باید عدد باشد',
             'percent.gte' => 'درصد تخفیف محصول باید بیشتر از 0 باشد',
             'percent.lte' => 'درصد تخفیف محصول باید کمتر از 100 باشد' ,
+            'contact.required' => 'اطلاعات تماس خود را وارد نمایید' ,
+            'category_id.exists' => 'دسته بندی ارسال شده معتبر نمی باشد',
+            'category_id.required' => 'دسته بندی را وارد نمایید'
         ];
     }
 }

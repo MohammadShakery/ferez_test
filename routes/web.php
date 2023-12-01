@@ -1,6 +1,8 @@
 <?php
 
 use App\Models\Category;
+use App\Models\Price;
+use App\Models\Setting;
 use App\Services\SMS\SmsService;
 use Aws\Exception\AwsException;
 use Aws\Exception\MultipartUploadException;
@@ -8,9 +10,10 @@ use Aws\S3\Exception\S3Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Request;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -22,5 +25,7 @@ use Illuminate\Support\Facades\Storage;
 |
 */
 
-
+    Route::get('test',function (){
+        dd(\App\Models\Price::query()->get()->groupBy('category'));
+    });
 

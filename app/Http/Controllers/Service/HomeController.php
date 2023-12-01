@@ -8,6 +8,7 @@ use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Network;
 use App\Models\Post;
+use App\Models\Price;
 use App\Models\Requirement;
 use App\Models\Slider;
 use App\Models\specialSale;
@@ -19,12 +20,7 @@ class HomeController extends Controller
 {
     public function home(Request $request)
     {
-        $price = array(
-            'usd' => 52000 ,
-            'euro' => 56000 ,
-            'gold' => 2387000 ,
-            'sekkeh_tamam' => 30000000 ,
-        );
+
         if(Cache::has('home'))
         {
             $data_array = (array)json_decode(Cache::get('home'));
@@ -40,7 +36,7 @@ class HomeController extends Controller
             'new_brands'     => Brand::query()->orderByDesc('created_at')->limit(10)->get() ,
             'popular_brands' => Brand::query()->orderByDesc('view')->limit(10)->get() ,
             'news'           => Alert::query()->orderByDesc('created_at')->limit(5)->get() ,
-            'price'          => $price
+            'price'          => Price::query()->where('category','ارزها')->get()
         );
         Cache::put('home',json_encode($data),now()->addSeconds(30));
         return response($data,200);
@@ -50,4 +46,24 @@ class HomeController extends Controller
     {
         return User::query()->where('phone',decrypt($request->header('token'))['BMSN'])->firstOrFail();
     }
+
+    public function price()
+    {
+
+        if(Cache::has('price'))
+        {
+            $data_array = (array)json_decode(Cache::get('price'));
+            $data_array["cache"] = true;
+            return response($data_array,200);
+        }
+        $data = array(
+            'status'         => true ,
+            'price'          => Price::query()->get()->groupBy('category')
+        );
+        Cache::put('price',json_encode($data),now()->addSeconds(150));
+        return response($data,200);
+    }
+
+
+
 }

@@ -133,6 +133,9 @@ use Illuminate\Support\Facades\Route;
 
         Route::get('/alert',[\App\Http\Controllers\Service\AlertController::class,'index']);
         Route::get('/alert/{alert}',[\App\Http\Controllers\Service\AlertController::class,'show']);
+
+        Route::get('/price',[\App\Http\Controllers\Service\HomeController::class,'price']);
+
     });
 
 
