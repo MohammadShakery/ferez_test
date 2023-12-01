@@ -130,6 +130,7 @@ use Illuminate\Support\Facades\Route;
 
         Route::get('/special_sale',[\App\Http\Controllers\Service\SpecialSaleController::class,'getSpecialSaleByPage']);
         Route::get('/special_sale/{special_sale}',[\App\Http\Controllers\Service\SpecialSaleController::class,'getSpecialSale']);
+        Route::get('/category/{category}/special_sale',[\App\Http\Controllers\Service\SpecialSaleController::class,'getSpecialSaleByCategory']);
 
         Route::get('/alert',[\App\Http\Controllers\Service\AlertController::class,'index']);
         Route::get('/alert/{alert}',[\App\Http\Controllers\Service\AlertController::class,'show']);

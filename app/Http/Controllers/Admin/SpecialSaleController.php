@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\SpecialSaleStoreRequest;
 use App\Http\Requests\Admin\SpecialSaleUpdateRequest;
 use App\Models\Brand;
+use App\Models\Category;
 use App\Models\specialSale;
 use App\Models\specialSaleImage;
 use Illuminate\Http\Request;
@@ -33,6 +34,14 @@ class SpecialSaleController extends Controller
 
     public function store(SpecialSaleStoreRequest $request)
     {
+        $category= Category::query()->where('id',$request->get('category_id'))->firstOrFail();
+        if($category->parent_id != 0)
+        {
+            return response([
+                'status' => false ,
+                'message' => 'امکان انتخاب زیر دسته بندی وجود ندارد'
+            ],200);
+        }
         $specialSale = specialSale::query()->create([
             'title' => $request->get('title') ,
             'description' => $request->get('description') ,
@@ -61,6 +70,17 @@ class SpecialSaleController extends Controller
 
     public function update(SpecialSaleUpdateRequest $request, specialSale $specialSale)
     {
+        if($request->has('category_id'))
+        {
+            $category= Category::query()->where('id',$request->get('category_id'))->firstOrFail();
+            if($category->parent_id != 0)
+            {
+                return response([
+                    'status' => false ,
+                    'message' => 'امکان انتخاب زیر دسته بندی وجود ندارد'
+                ],200);
+            }
+        }
         $specialSale->update($request->all());
         if($request->has('images'))
         {

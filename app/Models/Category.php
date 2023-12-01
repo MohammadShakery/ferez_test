@@ -40,5 +40,10 @@ class Category extends Model
         return $this->hasMany(Brand::class)->orderByDesc('view')->limit(10);
     }
 
+    public function special_sale()
+    {
+        return $this->hasMany(specialSale::class);
+    }
+
 
 }
