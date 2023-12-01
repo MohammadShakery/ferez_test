@@ -38,7 +38,8 @@ class SpecialSaleController extends Controller
             'description' => $request->get('description') ,
             'price' => $request->get('price') ,
             'percent' => $request->get('percent') ,
-            'contact' => $request->get('contact')
+            'contact' => $request->get('contact') ,
+            'category_id' => $request->get('category_id')
         ]);
         foreach ($request->file('images') as $image)
         {
