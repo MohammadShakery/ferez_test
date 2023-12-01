@@ -58,16 +58,14 @@ class SpecialSaleController extends Controller
             $data_array["cache"] = true;
             return response($data_array,200);
         }
-        $sale = $category->load('special_sale');
+        $sale = specialSale::query()->where('category_id',$category->id)->paginate();
         $data =array(
             'status' => true ,
-            'sales' => $sale
+            'sales' => $sale ,
+            'category' => $category
         );
         Cache::put('special_sale_by_category_id_'.$category->id.'_page_'.$request->get('page'),json_encode($data),now()->addSeconds(60));
-        return response([
-            'status' => true ,
-            'sales' => $sale
-        ],200);
+        return response($data,200);
 
     }
 
