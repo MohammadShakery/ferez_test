@@ -22,7 +22,7 @@ class AlertStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => ['required','max:50'],
+            'title' => ['required','max:255'],
             'link' => ['required','max:255'] ,
             'type' => ['required','in:0,1,2'] ,
             'image' => ['required','file','image','mimes:png,jpg,jpeg']

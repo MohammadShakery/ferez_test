@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\ProductStoreRequest;
 use App\Http\Requests\Admin\UpdateProductRequest;
 use App\Http\Requests\Admin\UpdateStoreRequest;
+use App\Models\brandCategory;
 use App\Models\Image;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -183,5 +184,14 @@ class ProductController extends Controller
                 'message' => 'امکان حذف این عکس وجود ندارد'
             ],200);
         }
+    }
+
+    public function getProductByBrandCategory(brandCategory $brandCategory)
+    {
+        $brandCategory_with_products = $brandCategory->load('products');
+        return response([
+            'status' => true ,
+            'products' => $brandCategory_with_products
+        ],200);
     }
 }

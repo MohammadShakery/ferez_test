@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-    Route::prefix('/service/v1/admin')->name('service.')->group(function (){
+    Route::prefix('/service/v1/admin')->name('admin.')->group(function (){
 
         # Admin Category Api
         Route::get('/category',[\App\Http\Controllers\Admin\CategoryController::class,'index']);
@@ -32,11 +32,13 @@ use Illuminate\Support\Facades\Route;
 
         # Admin Brand Category Api
         Route::resource('brand_category',\App\Http\Controllers\Admin\BrandCategoryController::class);
+        Route::get('/brand/{brand}/brand_categories',[\App\Http\Controllers\Admin\BrandCategoryController::class,'getBrandCategoryByBrand']);
 
         # Admin Product Api
         Route::resource('product',\App\Http\Controllers\Admin\ProductController::class);
         Route::post('/product/{product}/update',[\App\Http\Controllers\Admin\ProductController::class,'update']);
         Route::delete('/product/image/{image}',[\App\Http\Controllers\Admin\ProductController::class,'deleteImage']);
+        Route::get('/brand_category/{brand_category}/products',[\App\Http\Controllers\Admin\ProductController::class,'getProductByBrandCategory']);
 
         # Admin Alert Api
         Route::resource('alert',\App\Http\Controllers\Admin\AlertController::class);
@@ -135,8 +137,9 @@ use Illuminate\Support\Facades\Route;
         Route::get('/alert',[\App\Http\Controllers\Service\AlertController::class,'index']);
         Route::get('/alert/{alert}',[\App\Http\Controllers\Service\AlertController::class,'show']);
 
-        Route::get('/price',[\App\Http\Controllers\Service\HomeController::class,'price']);
-
+        Route::get('/price',[\App\Http\Controllers\Service\PriceController::class,'price']);
+        Route::get('/price/category',[\App\Http\Controllers\Service\PriceController::class,'priceCategories']);
+        Route::get('/category_price/{category_price}/prices',[\App\Http\Controllers\Service\PriceController::class,'getPriceByCategory']);
     });
 
 

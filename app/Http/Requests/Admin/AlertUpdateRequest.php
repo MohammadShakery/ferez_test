@@ -22,7 +22,7 @@ class AlertUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => ['max:50'],
+            'title' => ['max:255'],
             'link' => ['max:255'] ,
             'type' => ['in:0,1,2'] ,
             'image' => ['file','image','mimes:png,jpg,jpeg']

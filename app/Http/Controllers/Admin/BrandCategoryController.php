@@ -94,4 +94,13 @@ class BrandCategoryController extends Controller
             ],200);
         }
     }
+
+    public function getBrandCategoryByBrand(Brand $brand)
+    {
+        $brand_with_categories= $brand->load('brandCategory');
+        return response([
+            'status' => true ,
+            'brand_categories' => $brand_with_categories
+        ],200);
+    }
 }
