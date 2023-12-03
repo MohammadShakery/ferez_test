@@ -36,38 +36,38 @@ class UpdatePrice extends Command
         $res = $client->send($request);
         $data =  json_decode($res->getBody());
         Price::query()->updateOrCreate(
-            ['name' => 'یورو' ,'category' => 'ارزها' , 'unit' => 'عدد','type' => 'ریال'],
+            ['name' => 'یورو' ,'category_price_id' => 1 , 'unit' => 'عدد','type' => 'ریال'],
             ['price' => $data->current->price_eur->p]);
         Price::query()->updateOrCreate(
-            ['name' => 'درهم امارات' ,'category' => 'ارزها' , 'unit' => 'عدد','type' => 'ریال'],
+            ['name' => 'درهم امارات' ,'category_price_id' => 1 , 'unit' => 'عدد','type' => 'ریال'],
             ['price' => $data->current->price_aed->p]);
         Price::query()->updateOrCreate(
-            ['name' => 'روبل' ,'category' => 'ارزها' , 'unit' => 'عدد','type' => 'ریال'],
+            ['name' => 'روبل' ,'category_price_id' => 1 , 'unit' => 'عدد','type' => 'ریال'],
             ['price' => $data->current->price_rub->p]);
         Price::query()->updateOrCreate(
-            ['name' => 'پوند استرلینگ' ,'category' => 'ارزها' , 'unit' => 'عدد','type' => 'ریال'],
+            ['name' => 'پوند استرلینگ' ,'category_price_id' => 1 , 'unit' => 'عدد','type' => 'ریال'],
             ['price' => $data->current->price_gbp->p]);
         Price::query()->updateOrCreate(
-            ['name' => 'دلار' ,'category' => 'ارزها' , 'unit' => 'عدد','type' => 'ریال'],
+            ['name' => 'دلار' ,'category_price_id' => 1 , 'unit' => 'عدد','type' => 'ریال'],
             ['price' => $data->current->price_dollar_rl->p]);
         Price::query()->updateOrCreate(
-            ['name' => 'دلار استرالیا' ,'category' => 'ارزها' , 'unit' => 'عدد','type' => 'ریال'],
+            ['name' => 'دلار استرالیا' ,'category_price_id' => 1 , 'unit' => 'عدد','type' => 'ریال'],
             ['price' => $data->current->price_aud->p]);
 
         Price::query()->updateOrCreate(
-            ['name' => 'آلومینیم' ,'category' => 'فلزات' , 'unit' => 'تن','type' => 'دلار'],
+            ['name' => 'آلومینیم' ,'category_price_id' => 2 , 'unit' => 'تن','type' => 'دلار'],
             ['price' => $data->current->aluminium->p]);
         Price::query()->updateOrCreate(
-            ['name' => 'کبالت' ,'category' => 'فلزات' , 'unit' => 'تن','type' => 'دلار'],
+            ['name' => 'کبالت' ,'category_price_id' => 2 , 'unit' => 'تن','type' => 'دلار'],
             ['price' => $data->current->cobalt->p]);
         Price::query()->updateOrCreate(
-            ['name' => 'پالادیوم' ,'category' => 'فلزات' , 'unit' => 'تن','type' => 'دلار'],
+            ['name' => 'پالادیوم' ,'category_price_id' => 2 , 'unit' => 'تن','type' => 'دلار'],
             ['price' => $data->current->palladium->p]);
         Price::query()->updateOrCreate(
-            ['name' => 'پلاتینیم' ,'category' => 'فلزات' , 'unit' => 'تن','type' => 'دلار'],
+            ['name' => 'پلاتینیم' ,'category_price_id' => 2 , 'unit' => 'تن','type' => 'دلار'],
             ['price' => $data->current->platinum->p]);
         Price::query()->updateOrCreate(
-            ['name' => 'روی' ,'category' => 'فلزات' , 'unit' => 'تن','type' => 'دلار'],
+            ['name' => 'روی' ,'category_price_id' => 2 , 'unit' => 'تن','type' => 'دلار'],
             ['price' => $data->current->base_global_zinc->p]);
     }
 }

@@ -9,5 +9,10 @@ class Price extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name','category','price','unit','type'];
+    protected $fillable = ['name','category_price_id','price','unit','type'];
+
+    public function category()
+    {
+        return $this->belongsTo(categoryPrice::class,'category_price_id','id');
+    }
 }
