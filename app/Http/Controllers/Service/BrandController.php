@@ -65,7 +65,7 @@ class BrandController extends Controller
     {
         return response([
             'status' => true ,
-            'brands' => Brand::query()->where('name','like',"%{$slug}%")->simplePaginate(10)
+            'brands' => Brand::query()->where('name','like',"%{$slug}%")->paginate(10)
         ],200);
     }
 
@@ -73,7 +73,7 @@ class BrandController extends Controller
     {
         return response([
             'status' => true ,
-            'products' => Product::query()->where('name','like',"%{$slug}%")->simplePaginate(10)
+            'products' => Product::query()->where('name','like',"%{$slug}%")->paginate(10)
         ],200);
     }
 
