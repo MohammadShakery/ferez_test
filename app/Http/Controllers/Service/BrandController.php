@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Service;
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use App\Models\Category;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 
@@ -60,7 +61,21 @@ class BrandController extends Controller
         return response($data,200);
     }
 
+    public function searchInBrands($slug)
+    {
+        return response([
+            'status' => true ,
+            'brands' => Brand::query()->where('name','like',"%{$slug}%")->simplePaginate(10)
+        ],200);
+    }
 
+    public function searchInProducts($slug)
+    {
+        return response([
+            'status' => true ,
+            'products' => Product::query()->where('name','like',"%{$slug}%")->simplePaginate(10)
+        ],200);
+    }
 
 
 }
