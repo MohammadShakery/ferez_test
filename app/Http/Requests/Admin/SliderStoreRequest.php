@@ -22,7 +22,7 @@ class SliderStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'location' => ['required','in:main,brands','max:50'] ,
+            'location' => ['required','max:50'] ,
             'image' => ['required','file','max:3000','mimes:png,jpg,jpeg,gif'] ,
             'link' => ['max:255'],
             'priority' => ['in:0,1,2,3,4,5']

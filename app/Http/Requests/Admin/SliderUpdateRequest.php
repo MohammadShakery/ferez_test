@@ -22,7 +22,7 @@ class SliderUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'location' => ['in:main,brands','max:50'] ,
+            'location' => ['max:50'] ,
             'image' => ['file','max:3000','mimes:png,jpg,jpeg,gif'] ,
             'link' => ['max:255'] ,
             'priority' => ['in:0,1,2,3,4,5']
