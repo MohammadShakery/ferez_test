@@ -16,6 +16,11 @@ class Product extends Model
         return $this->belongsTo(brandCategory::class);
     }
 
+    public function brand()
+    {
+        return $this->hasOneThrough(Brand::class,brandCategory::class);
+    }
+
     public function images()
     {
         return $this->hasMany(Image::class);
