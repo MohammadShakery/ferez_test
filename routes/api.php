@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-    Route::prefix('/service/v1/admin')->name('admin.')->group(function (){
+    Route::prefix('/service/v1/admin')->name('admin.')->middleware(\App\Http\Middleware\LogRequest::class)->group(function (){
 
         # Admin Category Api
         Route::get('/category',[\App\Http\Controllers\Admin\CategoryController::class,'index']);
