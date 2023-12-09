@@ -31,12 +31,6 @@ class LogRequest
             'ip'           => $request->ip(),
             'http_version' => $_SERVER['SERVER_PROTOCOL'],
             'timestamp'    => $dt->toDateTimeString(),
-            'headers'      => [
-                // get all the required headers to log
-                'user-agent' => $headers['user-agent'],
-                'referer'    => $headers['referer'],
-                'origin'     => $headers['origin'],
-            ],
         ];
 
         // if request if authenticated
