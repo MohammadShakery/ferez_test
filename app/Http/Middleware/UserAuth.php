@@ -20,7 +20,7 @@ class UserAuth
         {
             return \response([
                 'status' => false ,
-                'message' => 'شما دسترسی به این قسمت ندارید'
+                'message' => 'لطفا ابتدا وارد حساب کاربری خود شوید'
             ],403);
         }
         try {
@@ -32,7 +32,7 @@ class UserAuth
         {
             return \response([
                 'status' => false ,
-                'message' => 'شما دسترسی به این قسمت ندارید'
+                'message' => 'لطفا ابتدا وارد حساب کاربری خود شوید'
             ],403);
         }
 

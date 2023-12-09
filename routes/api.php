@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-    Route::prefix('/service/v1/admin')->name('admin.')->middleware(\App\Http\Middleware\LogRequest::class)->group(function (){
+    Route::prefix('/service/v1/admin')->name('admin.')->group(function (){
 
         # Admin Category Api
         Route::get('/category',[\App\Http\Controllers\Admin\CategoryController::class,'index']);
@@ -79,6 +79,8 @@ use Illuminate\Support\Facades\Route;
         Route::get('/user/{user}',[\App\Http\Controllers\Admin\UserController::class,'show']);
         Route::post('/user/{user}',[\App\Http\Controllers\Admin\UserController::class,'update']);
 
+        Route::get('/violations',[\App\Http\Controllers\Admin\ViolationController::class,'index']);
+
     });
 
     Route::prefix('/service/v1/client')->name('service.')->group(function (){
@@ -106,6 +108,8 @@ use Illuminate\Support\Facades\Route;
             Route::get('/post/{post}/unlike',[\App\Http\Controllers\Service\PostController::class,'detachLike']);
 
             Route::get('/home',[\App\Http\Controllers\Service\HomeController::class,'home']);
+
+            Route::post('/brand/{brand}/violation',[\App\Http\Controllers\Service\ViolationController::class,'store']);
 
     });
 

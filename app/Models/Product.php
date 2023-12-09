@@ -16,10 +16,7 @@ class Product extends Model
         return $this->belongsTo(brandCategory::class);
     }
 
-    public function brand()
-    {
-        return $this->belongsTo(brandCategory::class)->with('brand');
-    }
+
 
     public function images()
     {

@@ -5,19 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class brandCategory extends Model
+class Violation extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name','brand_id'];
+    protected $fillable = ['user_id','brand_id','text'];
 
     public function brand()
     {
         return $this->belongsTo(Brand::class);
     }
 
-    public function products()
+    public function user()
     {
-        return $this->hasMany(Product::class)->with('images');
+        return $this->belongsTo(User::class);
     }
 }
