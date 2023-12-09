@@ -9,7 +9,8 @@ class Brand extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name','image','category_id','view','tell','description','priority','address','cdn_image'];
+    protected $fillable = ['name','image','category_id','view','tell','description','priority','address','cdn_image'
+    ,'site','instagram','email','whatsapp','linkedin','telegram'];
 
     public function category()
     {
