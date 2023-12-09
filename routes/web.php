@@ -9,6 +9,7 @@ use Aws\Exception\MultipartUploadException;
 use Aws\S3\Exception\S3Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\Psr7\Utils;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -25,7 +26,5 @@ use Illuminate\Support\Facades\Storage;
 |
 */
 
-    Route::get('test',function (){
-        dd(\App\Models\Price::query()->get()->groupBy('category'));
-    });
+
 

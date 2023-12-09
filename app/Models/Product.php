@@ -18,7 +18,7 @@ class Product extends Model
 
     public function brand()
     {
-        return $this->belongsTo(brandCategory::class)->select(['id','brand_id'])->with('brand');
+        return $this->belongsTo(brandCategory::class)->with('brand');
     }
 
     public function images()
