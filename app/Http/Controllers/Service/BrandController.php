@@ -39,7 +39,7 @@ class BrandController extends Controller
             'status' => true ,
             'brand' => Brand::query()->where('id',$brand->id)->with(['brandCategory' => function($query){
                 $query->with('products');
-            },'comments'])->first());
+            },'comments' ])->first());
         Cache::put('brand'.$brand->id,json_encode($data),now()->addSeconds(300));
         return response($data,200);
     }

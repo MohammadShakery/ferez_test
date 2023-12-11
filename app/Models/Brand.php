@@ -22,7 +22,7 @@ class Brand extends Model
         return $this->hasMany(brandCategory::class)->with('products');
     }
 
-    public function comments()
+    public function comments(User $user)
     {
         return $this->hasMany(Comment::class)->where('status',true)->orderByDesc('created_at');
     }

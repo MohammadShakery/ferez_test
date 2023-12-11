@@ -110,6 +110,7 @@ use Illuminate\Support\Facades\Route;
             Route::get('/home',[\App\Http\Controllers\Service\HomeController::class,'home']);
 
             Route::post('/brand/{brand}/violation',[\App\Http\Controllers\Service\ViolationController::class,'store']);
+            Route::get('/brand/{brand}/comments',[\App\Http\Controllers\Service\CommentController::class,'getCommentUser']);
 
     });
 
