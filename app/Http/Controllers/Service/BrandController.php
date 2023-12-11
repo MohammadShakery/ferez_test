@@ -29,6 +29,7 @@ class BrandController extends Controller
 
     public function show(Brand $brand)
     {
+        $this->addView($brand);
         if(Cache::has('brand'.$brand->id))
         {
             $data_array = (array)json_decode(Cache::get('brand'.$brand->id));
@@ -79,6 +80,19 @@ class BrandController extends Controller
                 }])->select(['id','brand_id']);
             }])->where('name','like',"%{$slug}%")->paginate(10)
         ],200);
+    }
+
+    public function addView(Brand $brand)
+    {
+        if(Cache::has('view_'.$brand->id))
+        {
+            $view = (Cache::get('view_'.$brand->id));
+            Cache::put('view_'.$brand->id,$view+1);
+        }
+        else
+        {
+            Cache::put('view_'.$brand->id,1);
+        }
     }
 
 

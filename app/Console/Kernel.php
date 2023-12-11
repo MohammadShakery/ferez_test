@@ -14,6 +14,7 @@ class Kernel extends ConsoleKernel
     {
          $schedule->command('app:visitors')->hourly();
          $schedule->command('app:price')->everyFiveMinutes();
+         $schedule->command('brand:view')->everyFifteenMinutes();
     }
 
     /**
