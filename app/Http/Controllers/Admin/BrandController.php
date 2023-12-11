@@ -7,6 +7,7 @@ use App\Http\Requests\Admin\BrandStoreRequest;
 use App\Http\Requests\Admin\UpdateStoreRequest;
 use App\Models\Brand;
 use App\Models\Category;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -129,7 +130,7 @@ class BrandController extends Controller
                 'status' => true ,
                 'message' => 'برند مورد نظر شما با موفقیت حذف گردید'
             ],200);
-        }catch (\mysqli_sql_exception $exception)
+        }catch (Exception $exception)
         {
             return response([
                 'status' => false ,
