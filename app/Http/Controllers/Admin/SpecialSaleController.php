@@ -59,7 +59,7 @@ class SpecialSaleController extends Controller
             specialSaleImage::query()->create([
                 'special_sale_id' => $specialSale->id ,
                 'src' => $path ,
-                'cdn_image' => (new \App\S3\ArvanS3)->sendFile($path)
+//                'cdn_image' => (new \App\S3\ArvanS3)->sendFile($path)
             ]);
         }
         return response([
@@ -93,7 +93,7 @@ class SpecialSaleController extends Controller
                 specialSaleImage::query()->create([
                     'special_sale_id' => $specialSale->id ,
                     'src' => $path ,
-                    'cdn_image' => (new \App\S3\ArvanS3)->sendFile($path)
+//                    'cdn_image' => (new \App\S3\ArvanS3)->sendFile($path)
                 ]);
             }
         }
