@@ -42,7 +42,7 @@ class RequirementController extends Controller
         $path = Storage::url($file);
         $requirement = Requirement::query()->create($request->all());
         $requirement->image = $path;
-        $requirement->cdn_image = (new \App\S3\ArvanS3)->sendFile($path);
+//        $requirement->cdn_image = (new \App\S3\ArvanS3)->sendFile($path);
         $requirement->save();
         return response([
             'status' => true ,
@@ -91,7 +91,7 @@ class RequirementController extends Controller
                 (new \App\S3\ArvanS3)->deleteFile($requirement->cdn_image);
             }
             $requirement->image = $fileUrl;
-            $requirement->cdn_image = (new \App\S3\ArvanS3)->sendFile($fileUrl);
+//            $requirement->cdn_image = (new \App\S3\ArvanS3)->sendFile($fileUrl);
             $requirement->save();
         }
 
