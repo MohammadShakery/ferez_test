@@ -25,4 +25,11 @@ class AuthStoreRequest extends FormRequest
             'phone' => ['required','regex:/^(0098|\+98)?(9\d{9})$/']
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'phone.regex' => 'فرمت وارد شده تلفن همراه معتبر نمی باشد'
+        ];
+    }
 }
