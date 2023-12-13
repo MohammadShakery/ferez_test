@@ -42,7 +42,8 @@ class RequirementController extends Controller
         $path = Storage::url($file);
         $requirement = Requirement::query()->create($request->all());
         $requirement->image = $path;
-//        $requirement->cdn_image = (new \App\S3\ArvanS3)->sendFile($path);
+        $requirement->cdn_image = (new \App\S3\ArvanS3)->sendFile($path);
+        $requirement->user_id=0;
         $requirement->save();
         return response([
             'status' => true ,
@@ -128,5 +129,16 @@ class RequirementController extends Controller
                 'message' => 'امکان حذف نیازمندی مورد نظر شما وجود ندارد'
             ],200);
         }
+    }
+
+    public function approveUserRequirement(Requirement $requirement)
+    {
+        $requirement->update([
+            'status' => true
+        ]);
+        return response([
+            'status' => true ,
+            'message' => 'نیازمندی مورد نظر با موفقیت منتشر گردید'
+        ],200);
     }
 }

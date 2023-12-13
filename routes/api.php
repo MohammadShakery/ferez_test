@@ -71,6 +71,7 @@ use Illuminate\Support\Facades\Route;
         Route::resource('requirement_category',\App\Http\Controllers\Admin\RequirementCategoryController::class);
         Route::resource('requirement',\App\Http\Controllers\Admin\RequirementController::class);
         Route::post('/requirement/{requirement}/update',[\App\Http\Controllers\Admin\RequirementController::class,'update']);
+        Route::get('requirement/{requirement}/approve',[\App\Http\Controllers\Admin\RequirementController::class,'approveUserRequirement']);
 
         Route::resource('post',\App\Http\Controllers\Admin\PostController::class);
         Route::post('/post/{post}/update',[\App\Http\Controllers\Admin\PostController::class,'update']);
@@ -112,6 +113,12 @@ use Illuminate\Support\Facades\Route;
 
             Route::post('/brand/{brand}/violation',[\App\Http\Controllers\Service\ViolationController::class,'store']);
             Route::get('/brand/{brand}/comments',[\App\Http\Controllers\Service\CommentController::class,'getCommentUser']);
+
+            Route::get('/user/requirement',[\App\Http\Controllers\Service\RequirementController::class,'getUserRequirements']);
+            Route::post('/user/requirement',[\App\Http\Controllers\Service\RequirementController::class,'store']);
+            Route::post('/user/requirement/{requirement}/update',[\App\Http\Controllers\Service\RequirementController::class,'update']);
+            Route::get('/user/requirement/{requirement}/delete',[\App\Http\Controllers\Service\RequirementController::class,'delete']);
+
 
     });
 

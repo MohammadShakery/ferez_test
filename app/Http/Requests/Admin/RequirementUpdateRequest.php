@@ -26,7 +26,9 @@ class RequirementUpdateRequest extends FormRequest
             'image' => ['mimes:png,gif,jpeg,jpg'] ,
             'description' => ['max:2000'] ,
             'contact' => ['max:2000'] ,
-            'requirement_category_id' => ['exists:requirement_categories,id']
+            'requirement_category_id' => ['exists:requirement_categories,id'],
+            'status' => ['in:0,1']
+
         ];
     }
 }

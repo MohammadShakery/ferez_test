@@ -10,7 +10,7 @@ class Requirement extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title','cdn_image','image','requirement_category_id','description','contact'];
+    protected $fillable = ['title','cdn_image','image','requirement_category_id','description','contact','status','user_id'];
 
     public function category()
     {
