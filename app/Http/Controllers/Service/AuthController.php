@@ -61,6 +61,7 @@ class AuthController extends Controller
             'otp_expiration' => Carbon::now()->addMinutes(20) ,
             'phone'          => $request->get('phone')
         ]);
+        $this->createDefaultsNetworkUser($user);
         $sms_api->OTP($user->phone,$code);
 
         return response([
