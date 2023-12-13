@@ -21,7 +21,7 @@ class BrandController extends Controller
         }
         $data =array(
             'status' => true ,
-            'brands' => Brand::query()->orderByDesc('priority')->get());
+            'brands' => Brand::query()->where('status',true)->orderByDesc('priority')->get());
         Cache::put('brands',json_encode($data),now()->addSeconds(300));
         return response($data,200);
 
@@ -38,9 +38,9 @@ class BrandController extends Controller
         }
         $data =array(
             'status' => true ,
-            'brand' => Brand::query()->where('id',$brand->id)->with(['brandCategory' => function($query){
+            'brand' => Brand::query()->where('status',true)->where('id',$brand->id)->with(['brandCategory' => function($query){
                 $query->with('products');
-            },'comments' ])->first());
+            },'comments' ])->firstOrFail());
         Cache::put('brand'.$brand->id,json_encode($data),now()->addSeconds(300));
         return response($data,200);
     }
@@ -55,7 +55,7 @@ class BrandController extends Controller
         }
         $data =array(
             'status'         => true ,
-            'brands'         => Category::query()->where('id',$category->id)->with('brands')->first() ,
+            'brands'         => Category::query()->where('id',$category->id)->with('brands' )->first() ,
             'new_brands'     => Category::query()->where('id',$category->id)->with('newBrands')->first(),
             'popular_brands' => Category::query()->where('id',$category->id)->with('popularBrands')->first());
         Cache::put('brandFromCategory_'.$category->id,json_encode($data),now()->addSeconds(300));

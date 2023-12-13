@@ -9,7 +9,7 @@ class Network extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name','user_id'];
+    protected $fillable = ['name','user_id','icon'];
 
     public function user()
     {
@@ -18,6 +18,6 @@ class Network extends Model
 
     public function brands()
     {
-        return $this->belongsToMany(Brand::class,'brand_network');
+        return $this->belongsToMany(Brand::class,'brand_network')->where('status',true);
     }
 }

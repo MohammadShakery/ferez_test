@@ -80,6 +80,7 @@ use Illuminate\Support\Facades\Route;
         Route::post('/user/{user}',[\App\Http\Controllers\Admin\UserController::class,'update']);
 
         Route::get('/violations',[\App\Http\Controllers\Admin\ViolationController::class,'index']);
+        Route::get('/attribute/{attribute}/delete',[\App\Http\Controllers\Admin\ProductController::class,'deleteAttribute']);
 
     });
 

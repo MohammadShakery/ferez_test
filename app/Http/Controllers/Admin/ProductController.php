@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\ProductStoreRequest;
 use App\Http\Requests\Admin\UpdateProductRequest;
 use App\Http\Requests\Admin\UpdateStoreRequest;
+use App\Models\Attribute;
 use App\Models\brandCategory;
 use App\Models\Image;
 use App\Models\Product;
@@ -52,6 +53,26 @@ class ProductController extends Controller
                 'cdn_image' => (new \App\S3\ArvanS3)->sendFile($fileUrl)
             ]);
         }
+        if($request->has('keys') and $request->has('values'))
+        {
+            if(sizeof($request->get('keys')) != sizeof($request->get('values')))
+            {
+                return  response([
+                    'status' => false ,
+                    'message' => 'تعداد کلید های ارسالی با جواب ها برابر نمی باشد'
+                ],200);
+            }
+            $keys = $request->get('keys');
+            $values = $request->get('values');
+            foreach ($keys as $k => $key )
+            {
+                Attribute::query()->insert([
+                    'product_id' => $product->id ,
+                    'key'    => $key ,
+                    'value'  => $values[$k]
+                ]);
+            }
+        }
         if ($request->hasFile('multidimensional_view')) {
             $file = $request->file('multidimensional_view');
             $name = uniqid();
@@ -64,7 +85,7 @@ class ProductController extends Controller
         }
         return response([
             'status' => true ,
-            'product' => Product::query()->where('id',$product->id)->with('images')->first()
+            'product' => Product::query()->where('id',$product->id)->with(['images','attributes'])->first()
         ],200);
     }
 
@@ -83,7 +104,7 @@ class ProductController extends Controller
     {
         return response([
             'status' => true ,
-            'product' => Product::query()->where('id',$product->id)->with('images')->first()
+            'product' => Product::query()->where('id',$product->id)->with(['images','attributes'])->first()
         ],200);
     }
 
@@ -109,6 +130,26 @@ class ProductController extends Controller
                 ]);
             }
         }
+        if($request->has('keys') and $request->has('values'))
+        {
+            if(sizeof($request->get('keys')) != sizeof($request->get('values')))
+            {
+                return  response([
+                    'status' => false ,
+                    'message' => 'تعداد کلید های ارسالی با جواب ها برابر نمی باشد'
+                ],200);
+            }
+            $keys = $request->get('keys');
+            $values = $request->get('values');
+            foreach ($keys as $k => $key )
+            {
+                Attribute::query()->insert([
+                    'product_id' => $product->id ,
+                    'key'    => $key ,
+                    'value'  => $values[$k]
+                ]);
+            }
+        }
         if ($request->hasFile('multidimensional_view')) {
             $file = $request->file('multidimensional_view');
             $name = uniqid();
@@ -126,7 +167,7 @@ class ProductController extends Controller
         }
         return response([
             'status' => true ,
-            'product' => Product::query()->where('id',$product->id)->with('images')->first()
+            'product' => Product::query()->where('id',$product->id)->with(['images','attributes'])->first()
         ],200);
     }
 
@@ -194,4 +235,23 @@ class ProductController extends Controller
             'products' => $brandCategory_with_products
         ],200);
     }
+
+    public function deleteAttribute(Attribute $attribute)
+    {
+        try {
+            $attribute->delete();
+            return response([
+                'status' => true ,
+                'message' => 'مشخصه مورد نظر شما با موفقیت حذف گردید'
+            ],200);
+        }catch (\Exception $exception)
+        {
+            return response([
+                'status' => false ,
+                'message' => 'امکان حذف این مشخصه وجود ندارد'
+            ],200);
+        }
+    }
+
+
 }

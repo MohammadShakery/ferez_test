@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Admin;
+namespace App\Http\Requests\Service;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -17,7 +17,7 @@ class SpecialSaleStoreRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array|string>
+     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
     public function rules(): array
     {
@@ -28,8 +28,7 @@ class SpecialSaleStoreRequest extends FormRequest
             'price' => ['integer','required'] ,
             'percent' => ['required','gte:1','lte:99'] ,
             'contact' => ['required'] ,
-            'category_id' => ['required','exists:categories,id'] ,
-            'status' => ['required','in:0,1']
+            'category_id' => ['required','exists:categories,id']
         ];
     }
 
@@ -49,9 +48,7 @@ class SpecialSaleStoreRequest extends FormRequest
             'percent.lte' => 'درصد تخفیف محصول باید کمتر از 100 باشد' ,
             'contact.required' => 'اطلاعات تماس خود را وارد نمایید' ,
             'category_id.exists' => 'دسته بندی ارسال شده معتبر نمی باشد',
-            'category_id.required' => 'دسته بندی را وارد نمایید',
-            'status.required' => 'وضعیت این فروش ویژه را انتاب نمایید',
-            'status.in' => 'وضعیت فروش ویژه انتخاب شده معتبر نمی باشد',
+            'category_id.required' => 'دسته بندی را وارد نمایید'
         ];
     }
 }

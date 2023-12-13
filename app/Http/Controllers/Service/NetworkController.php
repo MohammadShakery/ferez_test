@@ -28,7 +28,9 @@ class NetworkController extends Controller
     public function getBrands(Request $request)
     {
         $network = Network::query()->where('user_id',($this->getUser($request))->id)
-            ->where('id',$request->get('id'))->with('brands')->first();
+            ->where('id',$request->get('id'))->with(['brands' => function($query){
+                $query->with('category');
+            }])->first();
         return response([
             'status' => true ,
             'network' => $network
@@ -40,7 +42,8 @@ class NetworkController extends Controller
         $user = $this->getUser($request);
         Network::query()->create([
             'name' => $request->get('name') ,
-            'user_id' => $user->id
+            'user_id' => $user->id ,
+            'icon' => $request->get('icon')
         ]);
 
         return response([
@@ -60,7 +63,8 @@ class NetworkController extends Controller
             ],403);
         }
         $network->update([
-            'name' => $request->get('name')
+            'name' => $request->get('name') ,
+            'icon' => $request->get('icon')
         ]);
         return response([
             'status' => true ,

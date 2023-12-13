@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Service\AuthStoreRequest;
 use App\Http\Requests\Service\RegisterRequest;
 use App\Http\Requests\Service\VerifyOTPRequest;
+use App\Models\Network;
 use App\Models\Setting;
 use App\Models\User;
 use App\Services\SMS\SmsService;
@@ -44,7 +45,9 @@ class AuthController extends Controller
         ]);
         return response([
             'status' => true ,
-            'message' => 'کد احراز هویت به شماره همراه شما ارسال گردید'
+            'message' => 'کد احراز هویت به شماره همراه شما ارسال گردید',
+            'register' => false
+
         ],200);
 
     }
@@ -62,14 +65,14 @@ class AuthController extends Controller
 
         return response([
             'status' => true ,
-            'message' => 'ثبت نام انجام شد و کد احراز هویت به شماره همراه شما ارسال گردید'
+            'message' => 'ثبت نام انجام شد و کد احراز هویت به شماره همراه شما ارسال گردید' ,
+            'register' => true
         ],200);
     }
 
     public function VerifyOTP(VerifyOTPRequest $request)
     {
         $user = User::query()->where('phone',$request->get('phone'))->firstOrFail();
-
         if($user->otp_expiration < Carbon::now())
         {
             return response([
@@ -90,6 +93,8 @@ class AuthController extends Controller
         ));
         $user->update([
             'token' => $token ,
+            'name' => $request->get('name'),
+            'email' => $request->get('email'),
         ]);
 
         return response([
@@ -98,6 +103,25 @@ class AuthController extends Controller
             'message' => 'کد احراز هویت شما تایید شد و شما با موفقیت وارد شدید' ,
             'token' => $token ,
         ],200);
+    }
+
+    public function createDefaultsNetworkUser(User $user)
+    {
+        Network::query()->create([
+            'name' => "همکاران" ,
+            'user_id' => $user->id ,
+            'icon' => 'star.png'
+        ]);
+        Network::query()->create([
+            'name' => "تامین کنندگان" ,
+            'user_id' => $user->id ,
+            'icon' => 'truck.png'
+        ]);
+        Network::query()->create([
+            'name' => "خریداران" ,
+            'user_id' => $user->id ,
+            'icon' => 'box.png'
+        ]);
     }
 
 

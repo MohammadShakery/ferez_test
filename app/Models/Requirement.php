@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Morilog\Jalali\Jalalian;
 
 class Requirement extends Model
 {
@@ -15,4 +16,13 @@ class Requirement extends Model
     {
         return $this->belongsTo(requirementCategory::class,"requirement_category_id",'id');
     }
+
+
+    protected $appends = ['time'];
+
+    public function getTimeAttribute()
+    {
+        return Jalalian::forge($this->created_at)->ago();
+    }
+
 }

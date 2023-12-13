@@ -29,20 +29,6 @@ use Illuminate\Support\Facades\Storage;
 */
 
         Route::get('/test',function (){
-           $brands = \App\Models\Brand::all();
-           foreach ($brands as $brand)
-           {
-               if(Cache::has('view_'.$brand->id))
-               {
-                   $view = (Cache::get('view_'.$brand->id));
-                   Cache::put('view_'.$brand->id,$view+1);
-               }
-               else
-               {
-                   Cache::put('view_'.$brand->id,1);
-               }
-           }
-
-
+            return \App\Models\User::query()->first();
         });
 

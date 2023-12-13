@@ -27,22 +27,22 @@ class Category extends Model
 
     public function brands()
     {
-        return $this->hasMany(Brand::class)->orderByDesc('priority');
+        return $this->hasMany(Brand::class)->where('status',true)->orderByDesc('priority');
     }
 
     public function newBrands()
     {
-        return $this->hasMany(Brand::class)->orderByDesc('created_at')->limit(10);
+        return $this->hasMany(Brand::class)->where('status',true)->orderByDesc('created_at')->limit(10);
     }
 
     public function popularBrands()
     {
-        return $this->hasMany(Brand::class)->orderByDesc('view')->limit(10);
+        return $this->hasMany(Brand::class)->where('status',true)->orderByDesc('view')->limit(10);
     }
 
     public function special_sale()
     {
-        return $this->hasMany(specialSale::class);
+        return $this->hasMany(specialSale::class)->where('status',true);
     }
 
 

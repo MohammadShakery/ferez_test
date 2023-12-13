@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Service;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Service\SpecialSaleStoreRequest;
 use App\Models\Category;
 use App\Models\specialSale;
 use Illuminate\Http\Request;
@@ -68,5 +69,7 @@ class SpecialSaleController extends Controller
         return response($data,200);
 
     }
+
+
 
 }
