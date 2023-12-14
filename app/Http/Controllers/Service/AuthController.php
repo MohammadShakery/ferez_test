@@ -33,7 +33,8 @@ class AuthController extends Controller
         {
             return response([
                 'status' => false ,
-                'message' => 'کد ارسال شده قبلی معتبر می باشد'
+                'message' => 'کد ارسال شده قبلی معتبر می باشد',
+                'register' => false
             ],200);
         }
         $sms_api = new SmsService();
