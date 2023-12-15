@@ -40,6 +40,13 @@ class NetworkController extends Controller
     public function store(UpdateRequest $request)
     {
         $user = $this->getUser($request);
+        if(Network::query()->where('user_id',$user->id)->where('name',$request->get('name'))->exists())
+        {
+            return response([
+                'status' => false ,
+                'message' => 'شما درحال حاضر یک شبکه با این نام دارید'
+            ],200);
+        }
         Network::query()->create([
             'name' => $request->get('name') ,
             'user_id' => $user->id ,
@@ -61,6 +68,13 @@ class NetworkController extends Controller
                 'status' => false ,
                 'message' => 'شما دسترسی به این شبکه ندارید'
             ],403);
+        }
+        if(Network::query()->where('user_id',$user->id)->whereNot('id',$network->id)->where('name',$request->get('name'))->exists())
+        {
+            return response([
+                'status' => false ,
+                'message' => 'شما درحال حاضر یک شبکه با این نام دارید'
+            ],200);
         }
         $network->update([
             'name' => $request->get('name') ,
