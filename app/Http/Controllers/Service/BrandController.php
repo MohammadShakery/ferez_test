@@ -39,8 +39,12 @@ class BrandController extends Controller
         $data =array(
             'status' => true ,
             'brand' => Brand::query()->where('status',true)->where('id',$brand->id)->with(['brandCategory' => function($query){
-                $query->with('products');
-            },'comments' ])->firstOrFail());
+                $query->with(['products' => function($query){
+                    $query->with(['attributes']);
+                }]);
+            },'comments' => function($query){
+                $query->with('user');
+            } ])->firstOrFail());
         Cache::put('brand'.$brand->id,json_encode($data),now()->addSeconds(300));
         return response($data,200);
     }
