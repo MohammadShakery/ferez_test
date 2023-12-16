@@ -11,6 +11,9 @@ class DeployController extends Controller
     public function pullBackend(Request $request)
     {
         Log::info(print_r($request->all(),true));
+        return response([
+            'status' => true
+        ],200);
     }
 
     public function pullApp(Request $request)
