@@ -14,6 +14,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+    Route::prefix('/server/')->group(function (){
+        Route::get('/backend/pull',[\App\Http\Controllers\Server\DeployController::class,'pullBackend']);
+    });
+
+
+
+
+
     Route::prefix('/service/v1/admin')->name('admin.')->group(function (){
 
         # Admin Category Api
