@@ -96,6 +96,13 @@ class NetworkController extends Controller
                 'message' => 'شما دسترسی به این شبکه ندارید'
             ],403);
         }
+        if($network->brands->where('id',$brand->id)->isNotEmpty())
+        {
+            return response([
+                'status' => false ,
+                'message' => 'شما این برند را قبلا در این شبکه ثبت نموده اید'
+            ],200);
+        }
         $network->brands()->attach($brand);
         return  response([
             'status' => true ,
@@ -112,6 +119,13 @@ class NetworkController extends Controller
                 'status' => false ,
                 'message' => 'شما دسترسی به این شبکه ندارید'
             ],403);
+        }
+        if($network->brands->where('id',$brand->id)->isEmpty())
+        {
+            return response([
+                'status' => false ,
+                'message' => 'این برند در شبکه شما موجود نمی باشد'
+            ],200);
         }
         $network->brands()->detach($brand);
         return  response([
