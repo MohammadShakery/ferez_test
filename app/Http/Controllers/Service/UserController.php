@@ -26,6 +26,13 @@ class UserController extends Controller
     public function store(ProfileStoreRequest $request)
     {
         $user = $this->getUser($request);
+        if(User::query()->where('email',$request->get('email'))->whereNot('id',$user->id)->exists())
+        {
+            return  response([
+                'status' => false ,
+                'message' => 'ایمیل واردشده قبلا ثبت شده است'
+            ],200);
+        }
         $user->update($request->only(['email','name']));
         if ($request->hasFile('image')) {
             $file = $request->file('image');
