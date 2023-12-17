@@ -95,8 +95,8 @@ class AuthController extends Controller
         ));
         $user->update([
             'token' => $token ,
-            'name' => $request->get('name'),
-            'email' => $request->get('email'),
+            'name' => $request->get('name') != null ? $request->get('name') : $user->name,
+            'email' => $request->get('email') != null ? $request->get('email') : $user->email,
         ]);
 
         return response([
