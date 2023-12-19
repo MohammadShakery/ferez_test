@@ -13,7 +13,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
          $schedule->command('app:visitors')->hourly();
-         $schedule->command('app:price')->everyFiveMinutes();
+         $schedule->command('app:price')->everyFiveMinutes()->sentryMonitor();;
          $schedule->command('brand:view')->everyFifteenMinutes();
     }
 
