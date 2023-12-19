@@ -17,6 +17,7 @@
         "laravel/tinker": "^2.8",
         "morilog/jalali": "^3.4",
         "predis/predis": "^2.2",
+        "sentry/sentry-laravel": "^4.1",
         "spiral/roadrunner": "^2023.3"
     },
     "require-dev": {
