@@ -138,6 +138,7 @@ use Illuminate\Support\Facades\Route;
         Route::get('/brand/{brand}/show',[\App\Http\Controllers\Service\BrandController::class,'show']);
         Route::get('/brand/category/{category}/show',[\App\Http\Controllers\Service\BrandController::class,'brandFromCategory']);
         Route::get('/brand/{brand}/brand_categories',[\App\Http\Controllers\Service\BrandCategoryController::class,'index']);
+        Route::get('/product/{product}',[\App\Http\Controllers\Service\ProductController::class,'show']);
 
         Route::get('/brand/{slug}/search',[\App\Http\Controllers\Service\BrandController::class,'searchInBrands']);
         Route::get('/product/{slug}/search',[\App\Http\Controllers\Service\BrandController::class,'searchInProducts']);

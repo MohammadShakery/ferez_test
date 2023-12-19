@@ -44,7 +44,7 @@ class BrandController extends Controller
                 }]);
             },'comments' => function($query){
                 $query->with('user');
-            } ])->firstOrFail());
+            } ,'category'])->firstOrFail());
         Cache::put('brand'.$brand->id,json_encode($data),now()->addSeconds(300));
         return response($data,200);
     }
