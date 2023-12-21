@@ -28,7 +28,3 @@ use Illuminate\Support\Facades\Storage;
 |
 */
 
-        Route::get('/test',function (){
-            return \App\Models\User::query()->first();
-        });
-
