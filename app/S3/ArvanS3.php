@@ -46,6 +46,7 @@ class ArvanS3
                 return $result->get("ObjectURL");
             } catch (S3Exception $e) {
                 Log::error("s3 upload error: ".$e->getMessage());
+                return null;
             }
     }
 

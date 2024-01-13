@@ -50,5 +50,9 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+    public function brand()
+    {
+        return $this->hasOne(Brand::class);
+    }
 
 }

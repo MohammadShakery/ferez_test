@@ -28,3 +28,5 @@ use Illuminate\Support\Facades\Storage;
 |
 */
 
+    Route::get('/order/{order}',[\App\Http\Controllers\Service\PaymentController::class,'store']);
+    Route::get('/order/verify',[\App\Http\Controllers\Service\PaymentController::class,'verify'])->name('order.verify');

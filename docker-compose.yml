@@ -1,0 +1,76 @@
+version: '3'
+services:
+
+    # PHP Service
+    app:
+        build:
+            context:  D:\Projects\Laravel\samta\
+            dockerfile: Dockerfile
+        image: php:8.1
+        container_name: app
+        restart: unless-stopped
+        tty: true
+        environment:
+            SERVICE_NAME: app
+            SERVICE_TAGS: dev
+        working_dir: /var/www
+        volumes:
+            - D:\Projects\Laravel\samta:/var/www
+        deploy:
+            resources:
+                limits:
+                    cpus: "8.0"
+                    memory: 4000M
+        networks:
+            - app-network
+
+    # Nginx Service
+    webserver:
+        image: nginx:alpine
+        container_name: webserver
+        restart: unless-stopped
+        tty: true
+        ports:
+            - "80:80"
+            - "443:443"
+        volumes:
+            - D:\Projects\Laravel\samta:/var/www
+            - D:\Projects\Laravel\samta\conf.d:/etc/nginx/conf.d
+        networks:
+            - app-network
+
+
+    #MySQL Service
+    db:
+        image: mysql/mysql-server:8.0
+        container_name: db
+        restart: unless-stopped
+        tty: true
+        ports:
+            - "3315:3306"
+        environment:
+            MYSQL_ROOT_HOST: "%"
+            MYSQL_ROOT_PASSWORD: "root"
+            MYSQL_USER: "laravel"
+            MYSQL_PASSWORD: "FhgVoFuOrWspc3TgBIA2K4dZGuJTPwSYBoLnNckcaxy"
+            MYSQL_DATABASE: "samta"
+            MYSQL_ALLOW_EMPTY_PASSWORD: 1
+        volumes:
+            - dbdata:/var/lib/mysql
+        networks:
+            - app-network
+    redis:
+        image: redis:4.0
+        container_name: app_redis
+        ports:
+            - "6000:6379"
+        networks:
+            - app-network
+#Docker Networks
+networks:
+    app-network:
+        driver: bridge
+#Volumes
+volumes:
+    dbdata:
+        driver: local

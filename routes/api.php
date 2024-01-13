@@ -127,6 +127,10 @@ use Illuminate\Support\Facades\Route;
             Route::post('/user/requirement/{requirement}/update',[\App\Http\Controllers\Service\RequirementController::class,'update']);
             Route::get('/user/requirement/{requirement}/delete',[\App\Http\Controllers\Service\RequirementController::class,'delete']);
 
+            Route::get('/order',[\App\Http\Controllers\Service\OrderController::class,'index']);
+            Route::post('/order/store',[\App\Http\Controllers\Service\OrderController::class,'store']);
+
+
 
     });
 
@@ -165,6 +169,15 @@ use Illuminate\Support\Facades\Route;
         Route::get('/price',[\App\Http\Controllers\Service\PriceController::class,'price']);
         Route::get('/price/category',[\App\Http\Controllers\Service\PriceController::class,'priceCategories']);
         Route::get('/category_price/{category_price}/prices',[\App\Http\Controllers\Service\PriceController::class,'getPriceByCategory']);
+    });
+
+
+    Route::prefix('/service/v1/industrial')->group(function (){
+        Route::resource('brand_category',\App\Http\Controllers\Industrial\BrandCategoryController::class);
+        Route::resource('product',\App\Http\Controllers\Industrial\ProductController::class);
+        Route::resource('comment',\App\Http\Controllers\Industrial\CommentController::class);
+        Route::post('product/{product}/update',[\App\Http\Controllers\Industrial\ProductController::class,'update']);
+        Route::post('/profile',[\App\Http\Controllers\Industrial\ProfileController::class,'store']);
     });
 
 

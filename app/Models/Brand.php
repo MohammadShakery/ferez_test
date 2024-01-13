@@ -32,5 +32,14 @@ class Brand extends Model
         return $this->belongsToMany(Network::class,'brand_network');
     }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function products()
+    {
+        return $this->hasManyThrough(Product::class,brandCategory::class)->orderByDesc('created_at');
+    }
 
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\IndustrialStoreRequest;
+use App\Models\Brand;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -31,6 +32,14 @@ class IndustrialController extends Controller
             $user = User::query()->where('phone',(json_decode($request->data))->phone)->first();
             $user->update([
                 'is_industrial' => true
+            ]);
+            $data = json_decode($request->data);
+            Brand::query()->create([
+                'name' => $data->name ,
+                'user_id' => $request->user_id ,
+                'category_id' => $data->category,
+                'image' => $data->image ,
+                'status' => false
             ]);
         }
         $request->update([

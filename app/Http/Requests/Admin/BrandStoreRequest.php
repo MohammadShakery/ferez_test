@@ -26,7 +26,8 @@ class BrandStoreRequest extends FormRequest
             'name'        => ['required','max:50'] ,
             'image'       => ['required','file','image','max:3000','mimes:png,jpg,jpeg'] ,
             'tell'        => ['required','max:50'] ,
-            'priority'    => ['integer','lte:10','gte:0']
+            'priority'    => ['integer','lte:10','gte:0'] ,
+            'user_id'     => ['exists:users,id']
         ];
     }
 }

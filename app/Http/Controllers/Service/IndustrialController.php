@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Service;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Service\IndustrialCheckRequest;
+use App\Models\Brand;
+use App\Models\Category;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -19,6 +21,21 @@ class IndustrialController extends Controller
                 'message' => 'شما در حال حاضر یک درخواست بررسی نشده دارید.'
             ],200);
         }
+        $category = Category::query()->where('id',$request->get('category_id'))->first();
+        if($category->parent == 0)
+        {
+            return response([
+                'status' => false ,
+                'message' => 'زیر دسته برند خود را انتخاب نمایید'
+            ],200);
+        }
+        if(Brand::query()->where('name',$request->get('brand'))->exists())
+        {
+            return response([
+                'status' => false ,
+                'message' => 'این برند قبلا در فرز ثبت شده است!!'
+            ],200);
+        }
         $file = $request->file('image');
         $name = uniqid();
         $extension = $file->getClientOriginalExtension();
@@ -27,8 +44,7 @@ class IndustrialController extends Controller
         $data = array(
             'name' => $request->get('brand') ,
             'image' => $fileUrl ,
-            'address' => $request->get('address') ,
-            'phone' => $request->get('phone') ,
+            'category' => $category->id ,
         );
 
         \App\Models\Request::query()->create([

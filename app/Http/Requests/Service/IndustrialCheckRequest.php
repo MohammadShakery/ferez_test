@@ -24,8 +24,7 @@ class IndustrialCheckRequest extends FormRequest
         return [
             'brand'   => ['required','string','max:50'] ,
             'image'   => ['required','file','image','mimes:png,jpg,jpeg,gif','max:3000'] ,
-            'address' => ['required'] ,
-            'phone'   => ['required','regex:/^(0098|\+98)?(9\d{9})$/'] ,
+            'category_id' => ['required','exists:categories,id']
         ];
     }
 }

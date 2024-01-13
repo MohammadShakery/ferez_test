@@ -31,7 +31,7 @@ class BrandStatus extends Command
         foreach ($brands as $brand)
         {
             $brand->update([
-                'status' => false
+                'status' => true
             ]);
         }
         Log::info('تمامی برند ها غیر فعال گردید');

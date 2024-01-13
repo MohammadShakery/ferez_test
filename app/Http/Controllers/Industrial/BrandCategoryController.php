@@ -3,21 +3,29 @@
 namespace App\Http\Controllers\Industrial;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\BrandCategoryStoreRequest;
-use App\Http\Requests\Admin\BrandCategoryUpdateRequest;
+use App\Http\Requests\Industrial\BrandCategoryStoreRequest;
 use App\Models\Brand;
 use App\Models\brandCategory;
+use App\Models\User;
+use Illuminate\Http\Request;
 
 class BrandCategoryController extends Controller
 {
+    protected $user;
+    protected $brand;
+    public function __construct(Request $request)
+    {
+        $this->user = $this->getUser($request);
+        $this->brand = Brand::query()->where('user_id',$this->user->id)->first();
+    }
     /**
      * Display a listing of the resource.
      */
-    public function index(Brand $brand)
+    public function index(Request $request)
     {
         return response([
             'status' => true ,
-            'brand_categories' => brandCategory::query()->where('brand_id',$brand->id)->get()
+            'brand_categories' => brandCategory::query()->where('brand_id',$this->brand->id)->get()
         ],200);
     }
 
@@ -34,7 +42,10 @@ class BrandCategoryController extends Controller
      */
     public function store(BrandCategoryStoreRequest $request)
     {
-        $brand_category = brandCategory::query()->create([$request->all()]);
+        $brand_category = brandCategory::query()->create([
+            'name' => $request->get('name') ,
+            'brand_id' => $this->brand->id
+        ]);
 
         return response([
             'status' => true ,
@@ -55,6 +66,13 @@ class BrandCategoryController extends Controller
      */
     public function edit(brandCategory $brandCategory)
     {
+        if($brandCategory->brand_id != $this->brand->id )
+        {
+            return  response([
+                'status' => false,
+                'message' => 'شما دسترسی به این برند کتگوری ندارید'
+            ],200);
+        }
         return response([
             'status' => true ,
             'brand_category' => $brandCategory
@@ -64,9 +82,16 @@ class BrandCategoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(BrandCategoryUpdateRequest $request, brandCategory $brandCategory)
+    public function update(BrandCategoryStoreRequest $request, brandCategory $brandCategory)
     {
-        $brandCategory->update($request->all());
+        if($brandCategory->brand_id != $this->brand->id )
+        {
+            return  response([
+                'status' => false,
+                'message' => 'شما دسترسی به این برند کتگوری ندارید'
+            ],200);
+        }
+        $brandCategory->update([$request->get('name')]);
 
         return response([
             'status' => true ,
@@ -79,6 +104,13 @@ class BrandCategoryController extends Controller
      */
     public function destroy(brandCategory $brandCategory)
     {
+        if($brandCategory->brand_id != $this->brand->id )
+        {
+            return  response([
+                'status' => false,
+                'message' => 'شما دسترسی به این برند کتگوری ندارید'
+            ],200);
+        }
         try {
             $brandCategory->delete();
             return response([
@@ -92,5 +124,10 @@ class BrandCategoryController extends Controller
                 'message' => 'امکان حذف دسته بندی برند مورد نظر شما وجود ندارد'
             ],200);
         }
+    }
+
+    public function getUser(Request $request)
+    {
+        return User::query()->where('phone',decrypt($request->header('token'))['BMSN'])->firstOrFail();
     }
 }

@@ -37,6 +37,16 @@ class BrandController extends Controller
      */
     public function store(BrandStoreRequest $request)
     {
+        if($request->has('user_id'))
+        {
+            if(Brand::query()->where('user_id',$request->get('user_id'))->get()->count() > 1)
+            {
+                return response([
+                    'status' => false ,
+                    'message' => 'این کاربر صاحب یک برند دیگر می باشد'
+                ],200);
+            }
+        }
         $category = Category::query()->where('id',$request->get('category_id'))->first();
         if ($category->parent_id == 0)
         {
@@ -84,6 +94,16 @@ class BrandController extends Controller
      */
     public function update(UpdateStoreRequest $request, Brand $brand)
     {
+        if($request->has('user_id'))
+        {
+            if(Brand::query()->where('user_id',$request->get('user_id'))->whereNot('id',$brand->idos)->get()->count() > 1)
+            {
+                return response([
+                    'status' => false ,
+                    'message' => 'این کاربر صاحب یک برند دیگر می باشد'
+                ],200);
+            }
+        }
         $brand->update($request->all());
         if ($request->hasFile('image')) {
             $file = $request->file('image');
