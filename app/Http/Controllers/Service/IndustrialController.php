@@ -22,7 +22,7 @@ class IndustrialController extends Controller
             ],200);
         }
         $category = Category::query()->where('id',$request->get('category_id'))->first();
-        if($category->parent == 0)
+        if($category->parent_id == 0)
         {
             return response([
                 'status' => false ,
