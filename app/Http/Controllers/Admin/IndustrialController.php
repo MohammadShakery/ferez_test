@@ -29,7 +29,7 @@ class IndustrialController extends Controller
         }
         if($industrial_request->get('status') == 1)
         {
-            $user = User::query()->where('phone',(json_decode($request->data))->phone)->first();
+            $user = User::query()->where('id',$request->user_id)->first();
             $user->update([
                 'is_industrial' => true
             ]);
