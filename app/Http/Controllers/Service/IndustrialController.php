@@ -14,7 +14,15 @@ class IndustrialController extends Controller
 {
     public function CheckIndustrial(IndustrialCheckRequest $request)
     {
-        if(\App\Models\Request::query()->where('user_id',($this->getUser($request))->id)->where('checked',false)->exists())
+        $user = $this->getUser($request);
+        if (Brand::query()->where('user_id', $user->id)->exists())
+        {
+            return response([
+                'status' => false ,
+                'message' => 'شما هم اکنون نیز صاحب یک برند هستید.'
+            ],200);
+        }
+        if(\App\Models\Request::query()->where('user_id',$user->id)->where('checked',false)->exists())
         {
             return response([
                 'status' => false ,
@@ -50,7 +58,7 @@ class IndustrialController extends Controller
         \App\Models\Request::query()->create([
             'type' => 'industrial' ,
             'data' => json_encode($data) ,
-            'user_id' => ($this->getUser($request))->id
+            'user_id' => $user->id
         ]);
 
         return response([
