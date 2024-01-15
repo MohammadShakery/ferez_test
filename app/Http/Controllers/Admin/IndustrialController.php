@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\IndustrialStoreRequest;
 use App\Models\Brand;
 use App\Models\User;
-use Illuminate\Http\Request;
 
 class IndustrialController extends Controller
 {
