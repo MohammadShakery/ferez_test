@@ -9,6 +9,7 @@ use App\Models\brandCategory;
 use App\Models\User;
 use Illuminate\Http\Request;
 
+
 class BrandCategoryController extends Controller
 {
     protected $user;

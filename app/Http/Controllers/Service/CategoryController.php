@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Service;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\specialSale;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 
@@ -34,12 +35,13 @@ class CategoryController extends Controller
         }
         $data =array(
             'status' => true ,
-            'categories' => Category::query()->where('id',$category->id)->with('children')->firstOrFail());
-        Cache::put('subCategory_'.$category->id,json_encode($data),now()->addSeconds(300));
+            'categories' => Category::query()->where('id',$category->id)->with('children')->firstOrFail(),
+            // 'special_sale' => specialSale::find($category->id);
+            'special_sale' => specialSale::query()->where('category_id',$category->id)
+        );
+        Cache::put('subCategory_'.$category->id,json_encosde($data),now()->addSeconds(300));
         return response($data,200);
-
     }
-
     public function show(Category $category)
     {
         if(Cache::has('Category_'.$category->id))

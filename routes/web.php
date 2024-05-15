@@ -27,7 +27,7 @@ use Illuminate\Support\Facades\Storage;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
+    Route::get('/test2',[\App\Http\Controllers\testController::class,'create']);
     Route::get('/order/{order}',[\App\Http\Controllers\Service\PaymentController::class,'store']);
     Route::get('/order/verify',[\App\Http\Controllers\Service\PaymentController::class,'verify'])->name('order.verify');
 

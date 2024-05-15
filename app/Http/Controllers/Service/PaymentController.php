@@ -16,7 +16,7 @@ class PaymentController extends Controller
         if($order->pay == 1)
         {
             return response([
-                'message' => 'این فاکتور یکبار پرداخت شده است و امکان پرداخت مجدد آن وحود ندراد'
+                'message' => 'این فاکتور یکبار پرداخت شده است و امکان پرداخت مجدد آن وجود ندراد'
             ],200);
         }
         $invoice = (new Invoice)->amount($order->amount);

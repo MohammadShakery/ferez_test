@@ -58,6 +58,10 @@ use Illuminate\Support\Facades\Route;
         Route::get('user/{user}/comment',[\App\Http\Controllers\Admin\CommentController::class,'getCommentFromUser']);
 
 
+        Route::get('user/tickets',[\App\Http\Controllers\Admin\TicketController::class,'index']);
+        Route::post('user/tickets',[\App\Http\Controllers\Admin\TicketController::class,'create']);
+        Route::delete('user/tickets/{id}',[\App\Http\Controllers\Admin\TicketController::class,'delete']);
+
         Route::resource('slider',\App\Http\Controllers\Admin\SliderController::class);
         Route::post('/slider/{slider}/update',[\App\Http\Controllers\Admin\SliderController::class,'update']);
         Route::get('/slider/location/{location}',[\App\Http\Controllers\Admin\SliderController::class,'getWithLocation']);
